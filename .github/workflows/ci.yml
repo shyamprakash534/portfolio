@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  html-smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate portfolio HTML
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+
+          class Parser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.tags = []
+              def handle_starttag(self, tag, attrs):
+                  self.tags.append(tag)
+
+          path = Path('index.html')
+          assert path.exists(), 'index.html is missing'
+          text = path.read_text(encoding='utf-8')
+          parser = Parser()
+          parser.feed(text)
+          assert 'html' in parser.tags
+          assert 'head' in parser.tags
+          assert 'body' in parser.tags
+          assert '<title' in text.lower(), 'Missing title element'
+          print('portfolio HTML smoke test passed')
+          PY
