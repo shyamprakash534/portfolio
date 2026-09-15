@@ -6,18 +6,36 @@ Personal portfolio showcasing projects across **cloud engineering, data engineer
 
 I am an MCA graduate with a background in Statistics and hands-on project experience building cloud-deployed applications, data pipelines, backend services, predictive models, and AI/RAG systems.
 
-My primary technologies include **Python, SQL, Go, AWS, Docker, GitHub Actions, FastAPI/Flask, Streamlit, scikit-learn, LangGraph, RAG, and vector databases**.
-
 ## Featured Projects
 
 | Project | Focus | Technologies |
 |---|---|---|
+| [JobMatch AI](https://ai-job-application-tracker-o9vp.onrender.com) | Public AI job matcher — resume upload, skills/location preferences, ranked jobs, required/missing skills and application links | Python, FastAPI, JavaScript, httpx, Render |
 | [AWS E-Commerce Data Pipeline](https://github.com/shyamprakash534/aws-ecommerce-data-pipeline) | Data pipeline and analytics workflow | Python, AWS, S3, Pandas, Streamlit |
 | [Grounded RAG](https://github.com/shyamprakash534/grounded-rag) | Grounded retrieval-augmented generation | Python, RAG, LangGraph, ChromaDB, Ollama |
 | [CodeForge](https://github.com/shyamprakash534/Codeforge) | AI-assisted developer tooling | Python, FastAPI, Docker |
 | [NanoLink](https://github.com/shyamprakash534/nanolink1) | Production-oriented URL shortener | Go, Docker, Redis, ClickHouse |
 | [Drug & Dosage Decision-Support Prototype](https://github.com/shyamprakash534/drug-recommendation) | ML-based decision-support prototype | Python, Flask, scikit-learn, Pandas |
 | [E-Commerce Analytics Platform](https://github.com/shyamprakash534/ecommerce-analytics-platform) | Interactive analytics application | Python, Streamlit, Pandas, Plotly |
+
+## JobMatch AI
+
+**JobMatch AI** is a public web application that helps job seekers find current openings matched to their own profile.
+
+### User flow
+1. Upload a PDF or DOCX resume.
+2. Add skills and preferred locations.
+3. Optionally select job roles and work model.
+4. The application discovers current jobs from its configured public sources.
+5. Jobs are ranked using resume relevance, skills, location, experience eligibility and role relevance.
+6. Results show **match score, required skills, missing skills and an application link**.
+
+### Live
+- **Live app:** https://ai-job-application-tracker-o9vp.onrender.com
+- **Source:** https://github.com/shyamprakash534/ai-job-application-tracker
+- **Deployment:** Render
+
+> Application links are based on URLs supplied by the configured job sources. Required and missing skills are extracted from the job listing text available to the application.
 
 ## Technical Skills
 
@@ -92,8 +110,8 @@ Then open `http://localhost:8000` in your browser.
 
 ## Contact
 
-- **GitHub:** [shyamprakash534](https://github.com/shyamprakash534)
-- **LinkedIn:** [Vemula Syam Prakash](https://www.linkedin.com/in/vemula-syam-prakash/)
+- **GitHub:** https://github.com/shyamprakash534
+- **LinkedIn:** https://www.linkedin.com/in/shyam-prakash-vemula-721029263
 - **Email:** shyamprakash271@gmail.com
 
 ## Note
