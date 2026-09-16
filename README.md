@@ -10,7 +10,7 @@ I am an MCA graduate with a background in Statistics and hands-on project experi
 
 | Project | Focus | Technologies |
 |---|---|---|
-| [JobMatch AI](https://ai-job-application-tracker-o9vp.onrender.com) | Public AI job matcher — resume upload, skills/location preferences, ranked jobs, required/missing skills and application links | Python, FastAPI, JavaScript, httpx, Render |
+| [JobMatch AI](https://ai-job-application-tracker-o9vp.onrender.com) | Public AI job matcher — resume upload, skills/location preferences, ranked jobs, required/missing skills and source-first application links | Python, FastAPI, JavaScript, httpx, Render |
 | [AWS E-Commerce Data Pipeline](https://github.com/shyamprakash534/aws-ecommerce-data-pipeline) | Data pipeline and analytics workflow | Python, AWS, S3, Pandas, Streamlit |
 | [Grounded RAG](https://github.com/shyamprakash534/grounded-rag) | Grounded retrieval-augmented generation | Python, RAG, LangGraph, ChromaDB, Ollama |
 | [CodeForge](https://github.com/shyamprakash534/Codeforge) | AI-assisted developer tooling | Python, FastAPI, Docker |
@@ -28,14 +28,19 @@ I am an MCA graduate with a background in Statistics and hands-on project experi
 3. Optionally select job roles and work model.
 4. The application discovers current jobs from its configured public sources.
 5. Jobs are ranked using resume relevance, skills, location, experience eligibility and role relevance.
-6. Results show **match score, required skills, missing skills and an application link**.
+6. Results show **match score, required skills, missing skills and an application action**.
+7. **View & Apply opens the canonical job listing page first**, so users can follow the source's Apply / Continue-to-employer flow instead of being sent to a guessed or potentially broken direct URL.
 
 ### Live
 - **Live app:** https://ai-job-application-tracker-o9vp.onrender.com
 - **Source:** https://github.com/shyamprakash534/ai-job-application-tracker
 - **Deployment:** Render
 
-> Application links are based on URLs supplied by the configured job sources. Required and missing skills are extracted from the job listing text available to the application.
+### Application flow
+- **Jobicy listings:** open the canonical Jobicy job page first, then continue to the employer website/application from that listing.
+- **Hopin listings:** open the public Hopin job page first, where the available Hopin application flow or employer link is presented.
+
+> Job availability and application links depend on the configured public job sources. The application does not claim to contain every job on the internet.
 
 ## Technical Skills
 
@@ -106,7 +111,7 @@ For a local HTTP server with Python:
 python -m http.server 8000
 ```
 
-Then open `http://localhost:8000` in your browser.
+Then open `http://localhost:8000`.
 
 ## Contact
 
