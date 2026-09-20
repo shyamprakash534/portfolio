@@ -1,0 +1,31 @@
+name: Live deployment smoke tests
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+
+jobs:
+  live-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check public Render services
+        env:
+          URLS: |
+            https://ai-job-application-tracker-o9vp.onrender.com/health
+            https://nanolink1.onrender.com/health
+            https://drug-recommendation-5uxr.onrender.com/
+            https://grounded-rag-oww5.onrender.com/
+            https://codeforge-3l85.onrender.com/
+            https://ecommerce-analytics-platform-b342.onrender.com/
+            https://aws-ecommerce-data-pipeline.onrender.com/
+        run: |
+          set -euo pipefail
+          while IFS= read -r url; do
+            [ -z "$url" ] && continue
+            echo "Checking $url"
+            curl --fail --silent --show-error --location --retry 3 --retry-delay 5 --max-time 30 "$url" -o /dev/null
+          done <<< "$URLS"
+          echo "All live deployment smoke checks passed."
