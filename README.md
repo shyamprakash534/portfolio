@@ -45,7 +45,11 @@ I am a software developer focused on Python, backend engineering, AI/ML, GenAI, 
 ## Certifications
 
 - **Oracle Certified Foundations Associate — Agentic AI** — Oracle University (August 11, 2026 – August 11, 2028)
-- Certificate ID: `330515382AAI26OFA`
+  - Certificate ID: `330515382AAI26OFA`
+- **Google AI Professional Certificate** — Google
+- **AWS Certified Cloud Practitioner** — Amazon Web Services (AWS)
+- **Python Certification** — issuer/date not currently documented
+- **Robotics Certification** — issuer/date not currently documented
 
 ## Technical Skills
 
