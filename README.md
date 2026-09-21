@@ -4,7 +4,7 @@ Personal portfolio showcasing projects across **cloud engineering, data engineer
 
 ## About
 
-I am an MCA graduate with a background in Statistics and hands-on project experience building cloud-deployed applications, data pipelines, backend services, predictive models, and AI/RAG systems.
+I am a software developer focused on Python, backend engineering, AI/ML, GenAI, cloud computing, and data engineering, with a Statistics background and hands-on experience building cloud-deployed applications, data pipelines, backend services, predictive models, and AI/RAG systems.
 
 ## Featured Projects
 
@@ -41,6 +41,11 @@ I am an MCA graduate with a background in Statistics and hands-on project experi
 - **Hopin listings:** open the public Hopin job page first, where the available Hopin application flow or employer link is presented.
 
 > Job availability and application links depend on the configured public job sources. The application does not claim to contain every job on the internet.
+
+## Certifications
+
+- **Oracle Certified Foundations Associate — Agentic AI** — Oracle University (August 11, 2026 – August 11, 2028)
+- Certificate ID: `330515382AAI26OFA`
 
 ## Technical Skills
 
