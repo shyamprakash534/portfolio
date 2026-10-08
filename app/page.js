@@ -23,9 +23,6 @@ const process = [
 ];
 
 const RESUME_URL='/Syam_Prakash_AI_ML_Resume.pdf';
-const BASE_PATH=process.env.NEXT_PUBLIC_BASE_PATH || '';
-const HERO_VIDEO=`${BASE_PATH}/hero-video.mp4`;
-const HERO_POSTER=`${BASE_PATH}/hero-poster.jpg`;
 
 function Arrow(){return <span aria-hidden="true">↗</span>}
 
@@ -58,8 +55,9 @@ export default function Home(){
     {menu&&<div className="command-overlay" role="dialog" aria-modal="true" onClick={()=>setMenu(false)}><div className="command" onClick={e=>e.stopPropagation()}><div className="command-top"><span>QUICK NAVIGATION</span><button onClick={()=>setMenu(false)}>ESC</button></div>{[['#work','Selected work'],['#system','Engineering system'],['#stack','Toolkit & certifications'],['#contact','Contact'],['https://github.com/shyamprakash534','GitHub']].map(([href,label])=><a key={label} href={href} target={href.startsWith('http')?'_blank':undefined} rel="noreferrer" onClick={()=>setMenu(false)}><span>{label}</span><Arrow/></a>)}</div></div>}
 
     <section className="hero">
-      <video className="hero-video" autoPlay muted loop playsInline preload="metadata" poster={HERO_POSTER} aria-hidden="true">
-        <source src={HERO_VIDEO} type="video/mp4" />
+      <video className="hero-video" autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
+        <source src="/portfolio/hero-video.mp4" type="video/mp4" />
+        <source src="/hero-video.mp4" type="video/mp4" />
       </video>
       <div className="hero-shade"/>
       <div className="hero-grid"/><div className="hero-glow"/>
