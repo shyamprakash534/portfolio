@@ -1,3 +1,17 @@
-# Syam Prakash — Portfolio
+# Syam Prakash Portfolio
 
-Personal portfolio built with Next.js.
+Recruiter-focused portfolio built with Next.js.
+
+## Local
+
+```bash
+cd portfolio
+npm install
+npm run dev
+```
+
+## Render
+
+Build command: `cd portfolio && npm install && npm run build`
+
+Start command: `cd portfolio && npm start`
