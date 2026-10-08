@@ -22,7 +22,7 @@ const process = [
   ['06','OPERATE','Logs → metrics → iteration']
 ];
 
-const RESUME_URL='/Syam_Prakash_Resume.pdf';
+const RESUME_URL='/Syam_Prakash_AI_ML_Resume.pdf';
 
 function Arrow(){return <span aria-hidden="true">↗</span>}
 
@@ -31,8 +31,6 @@ export default function Home(){
   const [active,setActive]=useState(null);
   const [menu,setMenu]=useState(false);
   const [progress,setProgress]=useState(0);
-  const videoRef=useRef(null);
-  useEffect(()=>{const v=videoRef.current;if(!v)return;v.muted=true;if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause()}else{const r=v.play();if(r&&r.catch)r.catch(()=>{})}},[]);
   const closeRef=useRef(null);const lastFocus=useRef(null);
   useEffect(()=>{if(active){lastFocus.current=document.activeElement;closeRef.current&&closeRef.current.focus();document.body.style.overflow='hidden';return()=>{document.body.style.overflow='';const el=lastFocus.current;lastFocus.current=null;if(el&&el.isConnected&&el.focus)el.focus()}}},[active]);
   useEffect(()=>{
@@ -57,7 +55,7 @@ export default function Home(){
     {menu&&<div className="command-overlay" role="dialog" aria-modal="true" onClick={()=>setMenu(false)}><div className="command" onClick={e=>e.stopPropagation()}><div className="command-top"><span>QUICK NAVIGATION</span><button onClick={()=>setMenu(false)}>ESC</button></div>{[['#work','Selected work'],['#system','Engineering system'],['#stack','Toolkit & certifications'],['#contact','Contact'],['https://github.com/shyamprakash534','GitHub']].map(([href,label])=><a key={label} href={href} target={href.startsWith('http')?'_blank':undefined} rel="noreferrer" onClick={()=>setMenu(false)}><span>{label}</span><Arrow/></a>)}</div></div>}
 
     <section className="hero">
-      <video ref={videoRef} className="hero-video" src="/hero.mp4" autoPlay muted playsInline preload="auto" aria-hidden="true" tabIndex={-1}/><div className="hero-shade"/>
+      <div className="hero-shade"/>
       <div className="hero-grid"/><div className="hero-glow"/>
       <div className="hero-content">
         <div className="eyebrow"><span className="pulse"/> PYTHON · AI/ML · GENAI · BACKEND · CLOUD <span>/ 2026</span></div>
@@ -83,7 +81,7 @@ export default function Home(){
 
     <section className="statement section">
       <div className="kicker"><span>01</span> THE BUILDER</div>
-      <div className="statement-grid"><div><h2>Software with<br/><em>intent.</em></h2><img className="portrait" src="/portrait.jpg" alt="Vemula Syam Prakash on a beach wearing sunglasses" width="720" height="952" loading="lazy"/></div><div><p className="statement-big">I like the space between an idea and a working system.</p><p className="muted">My work crosses AI/ML, GenAI, Python backends, APIs, databases, ETL, cloud infrastructure and deployment. The goal is simple: useful software that can actually run.</p><div className="principles"><span>01 / Evidence over hype</span><span>02 / Practical AI</span><span>03 / Reproducible systems</span><span>04 / Security + maintainability</span></div></div></div>
+      <div className="statement-grid"><div><h2>Software with<br/><em>intent.</em></h2></div><div><p className="statement-big">I like the space between an idea and a working system.</p><p className="muted">My work crosses AI/ML, GenAI, Python backends, APIs, databases, ETL, cloud infrastructure and deployment. The goal is simple: useful software that can actually run.</p><div className="principles"><span>01 / Evidence over hype</span><span>02 / Practical AI</span><span>03 / Reproducible systems</span><span>04 / Security + maintainability</span></div></div></div>
     </section>
 
     <section className="work section" id="work">
