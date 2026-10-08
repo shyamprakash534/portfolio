@@ -1,0 +1,7 @@
+.modal-facts li:before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:var(--acid)}
+.modal-note{margin:20px 0 0;padding:14px 16px;border:1px solid #3b3b35;border-radius:14px;color:#a9a9a1;font-size:12.5px;line-height:1.6}.modal-note b{color:#e8e8e0}
+.modal-wake{margin:16px 0 0;color:#77776f;font:11px 'DM Mono',monospace}
+
+@media(min-width:1051px){.terminal-wrap{transform:translateY(90px)}}
+
+@media(max-width:700px){.hero{background-size:auto 100svh;background-position:72% 0;background-repeat:no-repeat}.hero-video{height:100svh;bottom:auto;object-position:72% 50%}.hero .hero-content{padding-top:330px}}
