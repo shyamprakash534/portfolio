@@ -1,17 +1,28 @@
 # Syam Prakash Portfolio
 
-Recruiter-focused portfolio built with Next.js.
+Recruiter-focused portfolio built with Next.js and exported as a static site.
 
-## Local
+## Run locally
 
 ```bash
-cd portfolio
 npm install
 npm run dev
 ```
 
-## Render
+Open `http://localhost:3000`.
 
-Build command: `cd portfolio && npm install && npm run build`
+## Production build
 
-Start command: `cd portfolio && npm start`
+```bash
+npm run build
+```
+
+The static export is generated in `out/`.
+
+## Deployment
+
+- **Render:** build command `npm install && npm run build`; publish directory `out`.
+- **Vercel:** connected to the `main` branch; pushes trigger a deployment.
+- **GitHub Pages:** the GitHub Actions workflow builds with the `/portfolio` base path.
+
+The hero video is stored at `public/hero-video.mp4`. The downloadable resume is generated from `app/Syam_Prakash_AI_ML_Resume.pdf/route.js`.

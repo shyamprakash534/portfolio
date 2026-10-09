@@ -27,24 +27,78 @@ const HERO_VIDEO_URL = 'hero-video.mp4';
 function Arrow(){return <span aria-hidden="true">↗</span>}
 
 export default function Home(){
-  const [mouse,setMouse]=useState({x:50,y:50});
   const [active,setActive]=useState(null);
   const [menu,setMenu]=useState(false);
-  const [progress,setProgress]=useState(0);
+  const mainRef=useRef(null);
   const closeRef=useRef(null);const lastFocus=useRef(null);
-  useEffect(()=>{if(active){lastFocus.current=document.activeElement;closeRef.current&&closeRef.current.focus();document.body.style.overflow='hidden';return()=>{document.body.style.overflow='';const el=lastFocus.current;lastFocus.current=null;if(el&&el.isConnected&&el.focus)el.focus()}}},[active]);
+  const menuFirstRef=useRef(null);const menuLastFocus=useRef(null);
+
   useEffect(()=>{
-    const move=e=>setMouse({x:e.clientX/window.innerWidth*100,y:e.clientY/window.innerHeight*100});
-    const scroll=()=>setProgress(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100);
-    const key=e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();setMenu(v=>!v)}if(e.key==='Escape'){setMenu(false);setActive(null)}};
-    window.addEventListener('pointermove',move); window.addEventListener('scroll',scroll,{passive:true}); window.addEventListener('keydown',key);
-    scroll(); return()=>{window.removeEventListener('pointermove',move);window.removeEventListener('scroll',scroll);window.removeEventListener('keydown',key)};
+    if(active){
+      lastFocus.current=document.activeElement;
+      closeRef.current&&closeRef.current.focus();
+      return()=>{
+        const el=lastFocus.current;
+        lastFocus.current=null;
+        if(el&&el.isConnected&&el.focus)el.focus();
+      };
+    }
+  },[active]);
+
+  useEffect(()=>{
+    if(menu){
+      menuLastFocus.current=document.activeElement;
+      menuFirstRef.current&&menuFirstRef.current.focus();
+      return()=>{
+        const el=menuLastFocus.current;
+        menuLastFocus.current=null;
+        if(el&&el.isConnected&&el.focus)el.focus();
+      };
+    }
+  },[menu]);
+
+  useEffect(()=>{
+    if(!active&&!menu)return;
+    const previousOverflow=document.body.style.overflow;
+    document.body.style.overflow='hidden';
+    return()=>{document.body.style.overflow=previousOverflow};
+  },[active,menu]);
+
+  useEffect(()=>{
+    const root=mainRef.current;
+    if(!root)return;
+    const move=e=>{
+      root.style.setProperty('--mx',`${e.clientX/window.innerWidth*100}%`);
+      root.style.setProperty('--my',`${e.clientY/window.innerHeight*100}%`);
+    };
+    const scroll=()=>{
+      const maxScroll=document.documentElement.scrollHeight-window.innerHeight;
+      const percentage=maxScroll>0?window.scrollY/maxScroll*100:0;
+      root.style.setProperty('--progress',`${percentage}%`);
+    };
+    const key=e=>{
+      const target=e.target;
+      const typing=target&&(target.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName));
+      if(!typing&&(e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){
+        e.preventDefault();setMenu(v=>!v);
+      }
+      if(e.key==='Escape'){setMenu(false);setActive(null)}
+    };
+    window.addEventListener('pointermove',move,{passive:true});
+    window.addEventListener('scroll',scroll,{passive:true});
+    window.addEventListener('keydown',key);
+    scroll();
+    return()=>{
+      window.removeEventListener('pointermove',move);
+      window.removeEventListener('scroll',scroll);
+      window.removeEventListener('keydown',key);
+    };
   },[]);
 
   const trapTab=e=>{if(e.key!=='Tab')return;const f=[...e.currentTarget.querySelectorAll('a[href],button')];if(!f.length)return;const first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}};
   const featured=useMemo(()=>projects.slice(0,3),[]);
 
-  return <main id="top" style={{'--mx':`${mouse.x}%`,'--my':`${mouse.y}%`,'--progress':`${progress}%`}}>
+  return <main ref={mainRef} id="top" style={{'--mx':'50%','--my':'50%','--progress':'0%'}}>
     <div className="progress"/><div className="noise"/>
     <nav className="nav">
       <a className="brand" href="#top"><span>VSP</span><i>●</i></a>
@@ -52,7 +106,7 @@ export default function Home(){
       <div className="nav-right"><span className="status"><b/> Open to opportunities</span><button className="menu-button" onClick={()=>setMenu(true)} aria-label="Open navigation">⌘ K</button></div>
     </nav>
 
-    {menu&&<div className="command-overlay" role="dialog" aria-modal="true" onClick={()=>setMenu(false)}><div className="command" onClick={e=>e.stopPropagation()}><div className="command-top"><span>QUICK NAVIGATION</span><button onClick={()=>setMenu(false)}>ESC</button></div>{[['#work','Selected work'],['#system','Engineering system'],['#stack','Toolkit & certifications'],['#contact','Contact'],['https://github.com/shyamprakash534','GitHub']].map(([href,label])=><a key={label} href={href} target={href.startsWith('http')?'_blank':undefined} rel="noreferrer" onClick={()=>setMenu(false)}><span>{label}</span><Arrow/></a>)}</div></div>}
+    {menu&&<div className="command-overlay" role="dialog" aria-modal="true" aria-label="Quick navigation" onClick={()=>setMenu(false)}><div className="command" onKeyDown={trapTab} onClick={e=>e.stopPropagation()}><div className="command-top"><span>QUICK NAVIGATION</span><button onClick={()=>setMenu(false)} aria-label="Close quick navigation">ESC</button></div>{[['#work','Selected work'],['#system','Engineering system'],['#stack','Toolkit & certifications'],['#contact','Contact'],['https://github.com/shyamprakash534','GitHub']].map(([href,label])=><a key={label} ref={label==='Selected work'?menuFirstRef:null} href={href} target={href.startsWith('http')?'_blank':undefined} rel="noreferrer" onClick={()=>setMenu(false)}><span>{label}</span><Arrow/></a>)}</div></div>}
 
     <section className="hero">
       <video className="hero-video" autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
