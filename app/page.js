@@ -21,9 +21,8 @@ const process = [
   ['06','OPERATE','Logs → metrics → iteration']
 ];
 
-const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
-const RESUME_URL = `${BASE_PATH}/Syam_Prakash_AI_ML_Resume.pdf`;
-const HERO_VIDEO_URL = `${BASE_PATH}/hero-video.mp4`;
+const RESUME_URL = 'Syam_Prakash_AI_ML_Resume.pdf';
+const HERO_VIDEO_URL = 'hero-video.mp4';
 
 function Arrow(){return <span aria-hidden="true">↗</span>}
 
