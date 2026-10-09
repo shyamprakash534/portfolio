@@ -53,6 +53,7 @@ const lines = [
   'AWS Cloud Practitioner (CLF-C02) — AWS | 2026'
 ];
 
+export async function GET() {
 const normalize = value => value
   .replace(/[\u2018\u2019]/g, "'")
   .replace(/[\u201C\u201D]/g, '"')
@@ -241,3 +242,4 @@ return new Response(pdf, {
     'Cache-Control': 'public, max-age=3600'
   }
 });
+}
