@@ -164,7 +164,7 @@ for (const entry of entries) {
 }
 
 const pageStreams = pages.map((page, pageIndex) => {
-  const commands = [];
+  const commands = ['BT'];
   let y = top;
 
   if (pageIndex > 0) {
@@ -188,6 +188,7 @@ const pageStreams = pages.map((page, pageIndex) => {
   commands.push('/F1 7 Tf');
   commands.push('1 0 0 1 ' + (pageWidth - 104) + ' 22 Tm');
   commands.push('(VEMULA SYAM PRAKASH | PAGE ' + (pageIndex + 1) + ' OF ' + pages.length + ') Tj');
+  commands.push('ET');
   return commands.join('\n');
 });
 
