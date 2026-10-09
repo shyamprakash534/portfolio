@@ -11,7 +11,6 @@ const projects = [
   {name:"Drug & Dosage Recommender",tag:"MACHINE LEARNING",num:"06",desc:"A Flask machine-learning prototype that predicts drugs and dosages, with rule-based safety checks. Educational demo, not medical advice.",stack:["Python", "Scikit-learn", "Flask", "Gunicorn"],repo:"https://github.com/shyamprakash534/drug-recommendation",live:"https://drug-recommendation-5uxr.onrender.com",metric:"EDUCATIONAL ML DEMO",detail:"An end-to-end ML application from model training through inference to a web interface and PDF report.",evidence:["Random Forest predicts the drug; Gradient Boosting predicts the dosage", "Rule-based treatment scheduling and safety checks", "Model persistence with Joblib, PDF reports, served with Gunicorn"],note:"Educational prototype for software-engineering demonstration. It is not medical advice."}
 ];
 
-const skills = ['Python','Go','SQL','AI / ML','GenAI & RAG','FastAPI','Flask','AWS','ETL','PostgreSQL','Redis','Docker','Terraform','GitHub Actions','Scikit-learn','LangGraph','Ollama','ChromaDB'];
 
 const process = [
   ['01','DISCOVER','Problem → user → measurable outcome'],
@@ -22,7 +21,9 @@ const process = [
   ['06','OPERATE','Logs → metrics → iteration']
 ];
 
-const RESUME_URL='/Syam_Prakash_AI_ML_Resume.pdf';
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
+const RESUME_URL = `${BASE_PATH}/Syam_Prakash_AI_ML_Resume.pdf`;
+const HERO_VIDEO_URL = `${BASE_PATH}/hero-video.mp4`;
 
 function Arrow(){return <span aria-hidden="true">↗</span>}
 
@@ -36,7 +37,7 @@ export default function Home(){
   useEffect(()=>{
     const move=e=>setMouse({x:e.clientX/window.innerWidth*100,y:e.clientY/window.innerHeight*100});
     const scroll=()=>setProgress(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100);
-    const key=e=>{if(e.key==='Escape'){setMenu(false);setActive(null)}};
+    const key=e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();setMenu(v=>!v)}if(e.key==='Escape'){setMenu(false);setActive(null)}};
     window.addEventListener('pointermove',move); window.addEventListener('scroll',scroll,{passive:true}); window.addEventListener('keydown',key);
     scroll(); return()=>{window.removeEventListener('pointermove',move);window.removeEventListener('scroll',scroll);window.removeEventListener('keydown',key)};
   },[]);
@@ -56,8 +57,7 @@ export default function Home(){
 
     <section className="hero">
       <video className="hero-video" autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
-        <source src="/portfolio/hero-video.mp4" type="video/mp4" />
-        <source src="/hero-video.mp4" type="video/mp4" />
+        <source src={HERO_VIDEO_URL} type="video/mp4" />
       </video>
       <div className="hero-shade"/>
       <div className="hero-grid"/><div className="hero-glow"/>
@@ -69,7 +69,7 @@ export default function Home(){
             <h1>Build smart.<br/><em>Ship real.</em></h1>
             <p className="hero-lead">I’m <strong>Vemula Syam Prakash</strong> — an MCA graduate with a Statistics foundation, building practical AI products, backend systems and cloud/data workflows.</p>
             <div className="actions"><a className="button primary" href="#work">Explore work <Arrow/></a>{RESUME_URL&&<a className="button ghost" href={RESUME_URL} download>Resume <span aria-hidden="true">↓</span></a>}<a className="button ghost" href="https://github.com/shyamprakash534" target="_blank" rel="noreferrer">GitHub <Arrow/></a><a className="quiet-link" href="https://www.linkedin.com/in/shyam-prakash-vemula-721029263/" target="_blank" rel="noreferrer">LinkedIn <Arrow/></a></div>
-            <div className="hero-meta"><span>BASED IN INDIA</span><span>06 LIVE PROJECTS</span><span>OPEN TO BUILD</span></div>
+            <div className="hero-meta"><span>BASED IN INDIA</span><span>06 PROJECTS</span><span>OPEN TO BUILD</span></div>
           </div>
           <div className="terminal-wrap">
             <div className="terminal-glow"/>

@@ -1,7 +1,7 @@
 import './globals.css';
 
 export const metadata = {
-  metadataBase: new URL('https://syam-prakash-portfolio.onrender.com'),
+  metadataBase: new URL('https://syam-prakash-portfolio-live.vercel.app'),
   title: 'Vemula Syam Prakash — Python · AI/ML · GenAI · Backend',
   description: 'Vemula Syam Prakash builds practical AI products, backend systems and cloud/data workflows with Python, GenAI and modern engineering tools.',
   keywords: ['Vemula Syam Prakash','Python Developer','AI/ML Engineer','GenAI','Backend Developer','AWS','Data Engineering'],
@@ -11,15 +11,13 @@ export const metadata = {
   openGraph: {
     title: 'Vemula Syam Prakash — Software Engineer & AI Builder',
     description: 'Practical AI products, backend systems and cloud/data workflows.',
-    images: [{ url: '/og.jpg', width: 1200, height: 630, alt: 'Vemula Syam Prakash, AI/ML & Python Developer' }],
-    url: 'https://syam-prakash-portfolio.onrender.com',
+    url: 'https://syam-prakash-portfolio-live.vercel.app',
     siteName: 'Vemula Syam Prakash',
     type: 'website',
     locale: 'en_IN',
   },
   twitter: {
-    card: 'summary_large_image',
-    images: ['/og.jpg'],
+    card: 'summary',
     title: 'Vemula Syam Prakash — Software Engineer & AI Builder',
     description: 'Practical AI products, backend systems and cloud/data workflows.',
   },
@@ -38,7 +36,7 @@ export const viewport = {
   colorScheme: 'dark',
 };
 
-const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: 'Vemula Syam Prakash', jobTitle: 'AI/ML & Python Developer', url: 'https://syam-prakash-portfolio.onrender.com', sameAs: ['https://github.com/shyamprakash534', 'https://www.linkedin.com/in/shyam-prakash-vemula-721029263'] };
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: 'Vemula Syam Prakash', jobTitle: 'AI/ML & Python Developer', url: 'https://syam-prakash-portfolio-live.vercel.app', sameAs: ['https://github.com/shyamprakash534', 'https://www.linkedin.com/in/shyam-prakash-vemula-721029263'] };
 
 export default function RootLayout({ children }) {
   return <html lang="en"><body>{children}<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} /></body></html>;

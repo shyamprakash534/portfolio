@@ -1,4 +1,4 @@
-const baseUrl = 'https://syam-prakash-portfolio.onrender.com';
+const baseUrl = 'https://syam-prakash-portfolio-live.vercel.app';
 
 export default function sitemap() {
   return [{
