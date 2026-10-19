@@ -40,8 +40,10 @@ export default function Home(){
       <div className="hero-video-shade"/>
       <div className="hero-content">
         <div className="hero-copy">
+          <p className="hero-eyebrow">SOFTWARE • AI • DATA • CLOUD</p>
           <h1><span className="intro-light">Hi, I’m</span><br/><span className="dark">Syam Prakash</span></h1>
-          <p className="hero-lead">I build practical AI, data, cloud and backend systems that turn ideas into working products.</p>
+          <p className="hero-role">Software Developer</p>
+          <p className="hero-lead">I build practical software across Python, AI/ML, backend engineering, cloud and data.</p>
           <div className="actions"><a className="pill primary" href="#projects">View My Work <Arrow/></a><a className="pill light" href="#contact">Contact Me</a></div>
         </div>
       </div>
@@ -51,7 +53,7 @@ export default function Home(){
 
     <section className="section about" id="about"><div className="section-kicker">01 / ABOUT ME</div><div className="about-grid"><h2>Building with <em>purpose.</em></h2><div><p className="about-copy">I’m Vemula Syam Prakash, an MCA graduate with a Statistics foundation. I enjoy the space between an idea and a working system — designing APIs, training models, building data workflows and shipping usable applications.</p><p className="about-copy">My focus is practical engineering: clean architecture, evidence over hype, reproducible systems and software that can actually run.</p><div className="principles"><span>01 / Practical AI</span><span>02 / Backend systems</span><span>03 / Cloud & data</span><span>04 / Maintainable code</span></div></div></div></section>
 
-    <section className="section projects" id="projects"><div className="section-kicker">02 / SELECTED WORK</div><div className="project-intro"><h2>Things I’ve <em>built.</em></h2><p>Real projects with repositories and live demos where available. Click any project for a closer look.</p></div><div className="project-grid">{projects.slice(0,3).map((p,i)=><ProjectCard key={p.name} p={p} onOpen={()=>setActive(p)}/>)}</div><div className="more-projects">{projects.slice(3).map(p=><button className="mini-project" key={p.name} onClick={()=>setActive(p)}><strong>{p.name}</strong><small>{p.tag} · {p.metric}</small></button>)}</div></section>
+    <section className="section projects" id="projects"><div className="section-kicker">02 / SELECTED WORK</div><div className="project-intro"><h2>Things I’ve <em>built.</em></h2><p>Real projects with repositories and live demos where available. Click any project for a closer look.</p></div><div className="project-grid">{projects.slice(0,3).map(p=><ProjectCard key={p.name} p={p} onOpen={()=>setActive(p)}/>)}</div><div className="more-projects">{projects.slice(3).map(p=><button className="mini-project" key={p.name} onClick={()=>setActive(p)}><strong>{p.name}</strong><small>{p.tag} · {p.metric}</small></button>)}</div></section>
 
     <section className="section skills" id="skills"><div className="section-kicker">03 / TOOLKIT</div><h2>My <em>stack.</em></h2><div className="skills-grid">{Object.entries(skills).map(([group,items])=><div className="skill-box" key={group}><h3>{group}</h3><div className="skill-tags">{items.map(x=><span key={x}>{x}</span>)}</div></div>)}</div></section>
 
