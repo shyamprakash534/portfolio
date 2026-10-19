@@ -1,51 +1,56 @@
-/* Final interaction polish: clean hero identity + smoother motion language. */
-.hero h1{font-size:clamp(64px,8vw,118px);line-height:.88;letter-spacing:-.085em;max-width:760px}
-.hero h1 .intro-light,.hero h1 .dark{display:none!important}
-.hero h1:after{content:'Syam Prakash';display:block;color:#fff;animation:nameReveal 1s cubic-bezier(.16,1,.3,1) .08s both}
-.hero-lead{animation:softRise .9s cubic-bezier(.16,1,.3,1) .26s both}
-.actions{animation:softRise .9s cubic-bezier(.16,1,.3,1) .38s both}
-.hero-video{animation:videoReveal 1.5s cubic-bezier(.16,1,.3,1) both;will-change:transform,filter}
-.hero-video-shade{transition:opacity 1.2s ease}
-.pill,.menu-button,.mute,.skill-box,.project-card,.expertise-card,.credential-card,.contact-link{transition:transform .55s cubic-bezier(.16,1,.3,1),opacity .4s ease,background-color .4s ease,border-color .4s ease,box-shadow .55s cubic-bezier(.16,1,.3,1),color .35s ease}
+/* Motion and interaction layer — additive to the reference-led visual system. */
+.scroll-progress{position:fixed;inset:0 auto auto 0;width:100%;height:3px;z-index:200;pointer-events:none;transform:scaleX(var(--scroll-progress,0));transform-origin:left center;background:linear-gradient(90deg,#fff 0%,#ff6079 46%,#ff173b 100%);box-shadow:0 0 16px rgba(255,23,59,.4);will-change:transform}
+.hero h1{font-size:clamp(54px,8.2vw,118px);line-height:.88;letter-spacing:-.085em;max-width:900px;text-wrap:balance;animation:nameReveal 1.08s cubic-bezier(.16,1,.3,1) .08s both}
+.hero-lead{animation:softRise .86s cubic-bezier(.16,1,.3,1) .24s both}
+.hero .actions{animation:softRise .86s cubic-bezier(.16,1,.3,1) .36s both}
+.hero-video{animation:videoReveal 1.35s cubic-bezier(.16,1,.3,1) both;will-change:opacity,filter}
+.hero-video-shade{transition:opacity 1s ease}
+.pill,.menu-button,.mute,.skill-box,.project-card,.expertise-card,.credential-card,.contact-link{transition:transform .48s cubic-bezier(.16,1,.3,1),opacity .35s ease,background-color .35s ease,border-color .35s ease,box-shadow .48s cubic-bezier(.16,1,.3,1),color .3s ease,padding .35s ease}
+.pill{position:relative;isolation:isolate;overflow:hidden}
+.pill:before{content:'';position:absolute;inset:0;z-index:0;transform:translateX(-125%) skewX(-18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:transform .72s cubic-bezier(.16,1,.3,1);pointer-events:none}
+.pill:hover:before{transform:translateX(125%) skewX(-18deg)}
+.pill>*{position:relative;z-index:1}
 .pill:active,.menu-button:active,.mute:active{transform:scale(.96)}
-.pill{position:relative;overflow:hidden}
-.pill:before{content:'';position:absolute;inset:0;transform:translateX(-120%) skewX(-18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);transition:transform .7s cubic-bezier(.16,1,.3,1)}
-.pill:hover:before{transform:translateX(120%) skewX(-18deg)}
 .menu-button:hover{transform:rotate(4deg) scale(1.04)}
 .mute:hover{transform:scale(1.08) rotate(-3deg)}
-.reveal-on-scroll.is-visible .section-kicker{animation:softRise .7s cubic-bezier(.16,1,.3,1) both}
-.reveal-on-scroll.is-visible .about-intro,.reveal-on-scroll.is-visible .expertise-head,.reveal-on-scroll.is-visible .skills-head,.reveal-on-scroll.is-visible .project-intro,.reveal-on-scroll.is-visible .cert-heading,.reveal-on-scroll.is-visible .contact-grid{animation:softRise .8s cubic-bezier(.16,1,.3,1) .08s both}
-.reveal-on-scroll.is-visible .expertise-card:nth-child(1),.reveal-on-scroll.is-visible .skill-box:nth-child(1),.reveal-on-scroll.is-visible .project-card:nth-child(1),.reveal-on-scroll.is-visible .credential-card:nth-child(1){animation:cardRise .75s cubic-bezier(.16,1,.3,1) .12s both}
-.reveal-on-scroll.is-visible .expertise-card:nth-child(2),.reveal-on-scroll.is-visible .skill-box:nth-child(2),.reveal-on-scroll.is-visible .project-card:nth-child(2),.reveal-on-scroll.is-visible .credential-card:nth-child(2){animation:cardRise .75s cubic-bezier(.16,1,.3,1) .2s both}
-.reveal-on-scroll.is-visible .expertise-card:nth-child(3),.reveal-on-scroll.is-visible .skill-box:nth-child(3),.reveal-on-scroll.is-visible .project-card:nth-child(3){animation:cardRise .75s cubic-bezier(.16,1,.3,1) .28s both}
-.reveal-on-scroll.is-visible .skill-box:nth-child(4),.reveal-on-scroll.is-visible .project-card:nth-child(4){animation:cardRise .75s cubic-bezier(.16,1,.3,1) .36s both}
-.reveal-on-scroll.is-visible .project-card:nth-child(5){animation:cardRise .75s cubic-bezier(.16,1,.3,1) .44s both}
-.reveal-on-scroll.is-visible .project-card:nth-child(6){animation:cardRise .75s cubic-bezier(.16,1,.3,1) .52s both}
+.project-card{display:block;width:100%;padding:0;text-align:left;color:inherit;font:inherit;appearance:none;-webkit-appearance:none;position:relative}
+.project-art{isolation:isolate}
+.project-art:after{content:'';position:absolute;z-index:1;inset:0;pointer-events:none;opacity:0;background:radial-gradient(260px circle at var(--spot-x,72%) var(--spot-y,35%),rgba(255,23,59,.38),transparent 68%);transition:opacity .45s ease}
+.project-art .number,.project-art .orb,.project-art .label{z-index:2}
+.reveal-on-scroll.is-visible .section-kicker{animation:softRise .68s cubic-bezier(.16,1,.3,1) both}
+.reveal-on-scroll.is-visible .about-intro,.reveal-on-scroll.is-visible .expertise-head,.reveal-on-scroll.is-visible .skills-head,.reveal-on-scroll.is-visible .project-intro,.reveal-on-scroll.is-visible .cert-heading,.reveal-on-scroll.is-visible .contact-grid{animation:softRise .78s cubic-bezier(.16,1,.3,1) .06s both}
+.reveal-on-scroll.is-visible .expertise-card:nth-child(1),.reveal-on-scroll.is-visible .skill-box:nth-child(1),.reveal-on-scroll.is-visible .project-card:nth-child(1),.reveal-on-scroll.is-visible .credential-card:nth-child(1){animation:cardRise .72s cubic-bezier(.16,1,.3,1) .08s both}
+.reveal-on-scroll.is-visible .expertise-card:nth-child(2),.reveal-on-scroll.is-visible .skill-box:nth-child(2),.reveal-on-scroll.is-visible .project-card:nth-child(2),.reveal-on-scroll.is-visible .credential-card:nth-child(2){animation:cardRise .72s cubic-bezier(.16,1,.3,1) .16s both}
+.reveal-on-scroll.is-visible .expertise-card:nth-child(3),.reveal-on-scroll.is-visible .skill-box:nth-child(3),.reveal-on-scroll.is-visible .project-card:nth-child(3){animation:cardRise .72s cubic-bezier(.16,1,.3,1) .24s both}
+.reveal-on-scroll.is-visible .skill-box:nth-child(4),.reveal-on-scroll.is-visible .project-card:nth-child(4){animation:cardRise .72s cubic-bezier(.16,1,.3,1) .32s both}
+.reveal-on-scroll.is-visible .project-card:nth-child(5){animation:cardRise .72s cubic-bezier(.16,1,.3,1) .4s both}
+.reveal-on-scroll.is-visible .project-card:nth-child(6){animation:cardRise .72s cubic-bezier(.16,1,.3,1) .48s both}
 .expertise-card:hover{transform:translateY(-7px) scale(1.012)!important;box-shadow:0 28px 70px rgba(0,0,0,.34)}
 .skill-box:hover{transform:translateY(-6px) scale(1.008)}
-.project-card:hover{transform:translateY(-9px) scale(1.008)}
+.project-card:hover{transform:translateY(-8px) scale(1.008);border-color:rgba(255,23,59,.78);box-shadow:0 23px 60px rgba(255,23,59,.1)}
+.project-card:hover .project-art:after{opacity:1}
 .credential-card:hover{transform:translateY(-5px);border-color:rgba(255,23,59,.55)}
 .contact-link:hover{transform:translateX(7px)}
-.menu-card .contact-link{transform:translateX(0);transition:transform .45s cubic-bezier(.16,1,.3,1),color .3s ease,border-color .3s ease}
-.menu-card .contact-link:hover{transform:translateX(9px)}
-.modal-card{animation:modalIn .55s cubic-bezier(.16,1,.3,1) both}
-.menu-card{animation:menuIn .65s cubic-bezier(.16,1,.3,1) both}
-.menu-card .contact-link{animation:menuItem .55s cubic-bezier(.16,1,.3,1) both}
-.menu-card .contact-link:nth-child(2){animation-delay:.05s}.menu-card .contact-link:nth-child(3){animation-delay:.1s}.menu-card .contact-link:nth-child(4){animation-delay:.15s}.menu-card .contact-link:nth-child(5){animation-delay:.2s}.menu-card .contact-link:nth-child(6){animation-delay:.25s}
-@keyframes nameReveal{from{opacity:0;transform:translate3d(0,42px,0) scale(.97);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
-@keyframes softRise{from{opacity:0;transform:translate3d(0,22px,0);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
-@keyframes cardRise{from{opacity:0;transform:translate3d(0,35px,0) scale(.985)}to{opacity:1;transform:none}}
-@keyframes videoReveal{from{opacity:0;transform:scale(1.08);filter:saturate(.7) contrast(.96) blur(4px)}to{opacity:1;transform:scaleY(1.25);filter:saturate(1.08) contrast(1.02) blur(0)}}
-@keyframes modalIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
-@keyframes menuIn{from{opacity:0;transform:translateX(5%)}to{opacity:1;transform:none}}
-@keyframes menuItem{from{opacity:0;transform:translateX(25px)}to{opacity:1;transform:none}}
-@media(max-width:700px){
-  .hero h1{font-size:clamp(45px,12.5vw,64px);letter-spacing:-.075em;max-width:100%}
-  .hero h1:after{white-space:nowrap}
-  .hero-lead{max-width:340px}
-  .expertise-card:hover{transform:translateY(-4px)!important}
-  .project-card:hover{transform:translateY(-5px) scale(1.003)}
-}
-@media(prefers-reduced-motion:reduce){
-  .hero h1:after,.hero-video,.hero-lead,.actions,.reveal-on-scroll.is-visible .section-kicker,.reveal-on-scroll.is-visible .about-intro,.reveal-on-scroll.is-visible .expertise-head,.reveal-on-scroll.is-visible .skills-head,.reveal-on-scroll.is-visible .project-intro,.reveal-on-scroll.is-visible .cert-heading,.reveal-on-scroll.is-visible .contact-grid,.reveal-on-scroll.is-visible .expertise-card,.reveal-on-scroll.is-visible .skill-box,.reveal-on-scroll.is-visible .project-card,.reveal-on-scroll.is-visible .credential-card,.modal-card,.menu-card,.menu-card .contact-link{animation:none!important}
-}
+.menu-card .contact-links .contact-link{transform:translateX(0);animation:menuItem .52s cubic-bezier(.16,1,.3,1) both}
+.menu-card .contact-links .contact-link:nth-child(1){animation-delay:.04s}
+.menu-card .contact-links .contact-link:nth-child(2){animation-delay:.09s}
+.menu-card .contact-links .contact-link:nth-child(3){animation-delay:.14s}
+.menu-card .contact-links .contact-link:nth-child(4){animation-delay:.19s}
+.menu-card .contact-links .contact-link:nth-child(5){animation-delay:.24s}
+.menu-card .contact-links .contact-link:nth-child(6){animation-delay:.29s}
+.menu-card .contact-links .contact-link:hover{transform:translateX(9px)}
+.modal-card{animation:modalIn .48s cubic-bezier(.16,1,.3,1) both}
+.menu-card{animation:menuIn .58s cubic-bezier(.16,1,.3,1) both}
+.modal-close{transition:transform .35s cubic-bezier(.16,1,.3,1),background-color .3s ease}
+.modal-close:hover{transform:rotate(90deg);background:rgba(255,255,255,.14)}
+@keyframes nameReveal{from{opacity:0;transform:translate3d(0,38px,0) scale(.975);filter:blur(9px)}to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}}
+@keyframes softRise{from{opacity:0;transform:translate3d(0,20px,0);filter:blur(4px)}to{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}}
+@keyframes videoReveal{from{opacity:.55;filter:blur(12px) saturate(.85)}to{opacity:1;filter:blur(0) saturate(1.08) contrast(1.02)}}
+@keyframes cardRise{from{opacity:0;transform:translate3d(0,24px,0) scale(.985)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+@keyframes modalIn{from{opacity:0;transform:translate3d(0,20px,0) scale(.975)}to{opacity:1;transform:translate3d(0,0,0) scale(1)}}
+@keyframes menuIn{from{opacity:0;transform:translateX(4%)}to{opacity:1;transform:translateX(0)}}
+@keyframes menuItem{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+@media(max-width:700px){.hero h1{font-size:clamp(39px,11.5vw,64px);line-height:.94;letter-spacing:-.075em;max-width:100%;white-space:nowrap}.hero-lead{max-width:340px}.hero .actions{gap:8px}.hero .pill{min-height:40px;padding:0 15px;font-size:11px}.project-card:hover{transform:translateY(-4px)}.expertise-card:hover{transform:translateY(-4px)!important}}
+@media(max-width:360px){.hero h1{font-size:clamp(35px,11vw,40px);letter-spacing:-.08em}}
+@media(hover:hover) and (pointer:fine){.project-card:hover .project-art .orb{transform:translateY(-50%) rotate(9deg) scale(1.06)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal-on-scroll{opacity:1;transform:none}.hero h1,.hero-lead,.hero .actions,.hero-video{opacity:1;filter:none;transform:none}}
