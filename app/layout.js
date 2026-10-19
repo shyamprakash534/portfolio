@@ -1,42 +1,32 @@
 import './globals.css';
 
 export const metadata = {
-  metadataBase: new URL('https://syam-prakash-portfolio-live.vercel.app'),
-  title: 'Vemula Syam Prakash — Python · AI/ML · GenAI · Backend',
-  description: 'Vemula Syam Prakash builds practical AI products, backend systems and cloud/data workflows with Python, GenAI and modern engineering tools.',
-  keywords: ['Vemula Syam Prakash','Python Developer','AI/ML Engineer','GenAI','Backend Developer','AWS','Data Engineering'],
+  metadataBase: new URL('https://shyamprakash534.github.io/portfolio/'),
+  title: 'Vemula Syam Prakash — Software Developer | Python · AI/ML · Cloud',
+  description: 'Portfolio of Vemula Syam Prakash — Software Developer building practical products across Python, AI/ML, backend engineering, cloud and data.',
+  keywords: ['Vemula Syam Prakash','Software Developer','Python Developer','AI/ML','GenAI','Backend Developer','AWS','Data'],
   authors: [{ name: 'Vemula Syam Prakash' }],
   creator: 'Vemula Syam Prakash',
-  alternates: { canonical: '/' },
+  alternates: { canonical: 'https://shyamprakash534.github.io/portfolio/' },
   openGraph: {
-    title: 'Vemula Syam Prakash — Software Engineer & AI Builder',
-    description: 'Practical AI products, backend systems and cloud/data workflows.',
-    url: 'https://syam-prakash-portfolio-live.vercel.app',
+    title: 'Vemula Syam Prakash — Software Developer',
+    description: 'Practical software across Python, AI/ML, backend, cloud and data.',
+    url: 'https://shyamprakash534.github.io/portfolio/',
     siteName: 'Vemula Syam Prakash',
     type: 'website',
     locale: 'en_IN',
   },
   twitter: {
     card: 'summary',
-    title: 'Vemula Syam Prakash — Software Engineer & AI Builder',
-    description: 'Practical AI products, backend systems and cloud/data workflows.',
+    title: 'Vemula Syam Prakash — Software Developer',
+    description: 'Python, AI/ML, backend, cloud and data projects.',
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
-  },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
 };
 
-export const viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  viewportFit: 'cover',
-  themeColor: '#050505',
-  colorScheme: 'dark',
-};
+export const viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: '#e93621', colorScheme: 'light' };
 
-const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: 'Vemula Syam Prakash', jobTitle: 'AI/ML & Python Developer', url: 'https://syam-prakash-portfolio-live.vercel.app', sameAs: ['https://github.com/shyamprakash534', 'https://www.linkedin.com/in/shyam-prakash-vemula-721029263'] };
+const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: 'Vemula Syam Prakash', jobTitle: 'Software Developer', url: 'https://shyamprakash534.github.io/portfolio/', sameAs: ['https://github.com/shyamprakash534', 'https://www.linkedin.com/in/shyam-prakash-vemula-721029263'] };
 
 export default function RootLayout({ children }) {
   return <html lang="en"><body>{children}<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} /></body></html>;
