@@ -128,7 +128,7 @@ export default function Home(){
         <div className="project-filters" role="group" aria-label="Filter projects by discipline">
           {['All','AI & ML','Backend','Cloud & Data'].map(label=><button type="button" key={label} className={projectFilter===label?'active':''} aria-pressed={projectFilter===label} onClick={()=>setProjectFilter(label)}>{label}<span>{label==='All'?projects.length:projects.filter(p=>p.group===label).length.toString().padStart(2,'0')}</span></button>)}
         </div>
-        <span className="project-count"><b>{visibleProjectCount(projectFilter,projects).toString().padStart(2,'0')}</b> / 06 PROJECTS</span>
+        <span className="project-count"><b>{visibleProjectCount.toString().padStart(2,'0')}</b> / 06 PROJECTS</span>
       </div>
       <div className="project-grid" aria-live="polite">{projects.filter(p=>projectFilter==='All'||p.group===projectFilter).map(p=><ProjectCard key={p.name} p={p} onOpen={event=>{returnFocusRef.current=event.currentTarget;setActive(p)}}/>)}</div>
       <div className="project-endnote"><span>BUILT WITH CURIOSITY</span><span>OPEN A CASE STUDY <span aria-hidden="true">↗</span></span></div>
