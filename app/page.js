@@ -41,7 +41,7 @@ export default function Home(){
       <div className="hero-content">
         <div className="hero-copy">
           <div className="hero-kicker">PYTHON · AI/ML · GENAI · CLOUD · DATA</div>
-          <h1>Hi, I’m <span className="dark">Syam Prakash</span><br/>a <span className="dark">Software Developer</span></h1>
+          <h1>Hi, I’m <span className="dark">Syam Prakash</span><br/><span className="dark">I build practical digital systems.</span></h1>
           <p className="hero-lead">I build practical software across Python, AI/ML, backend engineering, cloud and data — turning ideas into working products.</p>
           <div className="actions"><a className="pill primary" href="#projects">View My Work <Arrow/></a><a className="pill light" href="#contact">Contact Me</a></div>
           <div className="hero-meta"><span>MCA GRADUATE</span><span>6 FEATURED PROJECTS</span><span>OPEN TO WORK</span></div>
