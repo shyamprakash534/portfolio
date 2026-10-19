@@ -33,12 +33,43 @@ function Arrow(){return <span aria-hidden="true">↗</span>}
 
 export default function Home(){
   const [menu,setMenu]=useState(false),[muted,setMuted]=useState(true),[active,setActive]=useState(null);
-  const videoRef=useRef(null);
+  const videoRef=useRef(null), progressRef=useRef(null), menuButtonRef=useRef(null), returnFocusRef=useRef(null);
 
   useEffect(()=>{
     document.body.style.overflow=menu||active?'hidden':'';
     return()=>{document.body.style.overflow=''};
   },[menu,active]);
+
+  useEffect(()=>{
+    const closeOnEscape=event=>{if(event.key==='Escape'){setMenu(false);setActive(null);}};
+    window.addEventListener('keydown',closeOnEscape);
+    return()=>window.removeEventListener('keydown',closeOnEscape);
+  },[]);
+
+  useEffect(()=>{
+    if(menu||active){
+      const frame=requestAnimationFrame(()=>document.querySelector(menu?'.menu-modal .modal-close':'.project-modal .modal-close')?.focus());
+      return()=>cancelAnimationFrame(frame);
+    }
+    returnFocusRef.current?.focus?.();
+    returnFocusRef.current=null;
+  },[menu,active]);
+
+  useEffect(()=>{
+    let frame=0;
+    const updateProgress=()=>{
+      if(frame)cancelAnimationFrame(frame);
+      frame=requestAnimationFrame(()=>{
+        const max=document.documentElement.scrollHeight-window.innerHeight;
+        progressRef.current?.style.setProperty('--scroll-progress',String(max>0?Math.min(1,window.scrollY/max):0));
+        frame=0;
+      });
+    };
+    window.addEventListener('scroll',updateProgress,{passive:true});
+    window.addEventListener('resize',updateProgress);
+    updateProgress();
+    return()=>{window.removeEventListener('scroll',updateProgress);window.removeEventListener('resize',updateProgress);if(frame)cancelAnimationFrame(frame);};
+  },[]);
 
   useEffect(()=>{
     const items=document.querySelectorAll('.reveal-on-scroll');
@@ -59,21 +90,21 @@ export default function Home(){
   };
 
   return <main className="site">
-    <nav className="nav">
-      <a href="#top" className="brand">Syam<span className="brand-dot">.</span></a>
+    <div ref={progressRef} className="scroll-progress" aria-hidden="true"/>
+    <nav className="nav" aria-label="Main navigation">
+      <a href="#top" className="brand">Syam Prakash<span className="brand-dot">.</span></a>
       <div className="navlinks"><a href="#about">About</a><a href="#expertise">Expertise</a><a href="#skills">Skills</a><a href="#projects">Work</a><a href="#contact">Contact</a></div>
-      <div className="nav-right"><span className="availability"><b/> Open to opportunities</span><button className="menu-button" aria-label="Open menu" onClick={()=>setMenu(true)}><span>Menu</span></button></div>
+      <div className="nav-right"><span className="availability"><b/> Open to opportunities</span><button ref={menuButtonRef} className="menu-button" aria-label="Open menu" aria-expanded={menu} aria-controls="site-menu" onClick={event=>{returnFocusRef.current=event.currentTarget;setMenu(true)}}><span>Menu</span></button></div>
     </nav>
 
-    {menu&&<div className="modal menu-modal" onClick={()=>setMenu(false)}><div className="modal-card menu-card" onClick={e=>e.stopPropagation()}><div className="menu-card-head"><a href="#top" className="brand" onClick={()=>setMenu(false)}>Syam<span className="brand-dot">.</span></a><button className="modal-close" onClick={()=>setMenu(false)} aria-label="Close menu">×</button></div><div className="section-kicker">NAVIGATE</div><div className="contact-links"><a className="contact-link" href="#about" onClick={()=>setMenu(false)}>About <Arrow/></a><a className="contact-link" href="#expertise" onClick={()=>setMenu(false)}>Expertise <Arrow/></a><a className="contact-link" href="#skills" onClick={()=>setMenu(false)}>Skills <Arrow/></a><a className="contact-link" href="#projects" onClick={()=>setMenu(false)}>Selected work <Arrow/></a><a className="contact-link" href="#certifications" onClick={()=>setMenu(false)}>Certifications <Arrow/></a><a className="contact-link" href="#contact" onClick={()=>setMenu(false)}>Contact <Arrow/></a></div><a className="pill menu-hire" href="mailto:shyamprakash534@gmail.com" onClick={()=>setMenu(false)}>Let’s connect <Arrow/></a></div></div>}
+    {menu&&<div id="site-menu" className="modal menu-modal" role="dialog" aria-modal="true" aria-label="Site navigation" onClick={()=>setMenu(false)}><div className="modal-card menu-card" onClick={e=>e.stopPropagation()}><div className="menu-card-head"><a href="#top" className="brand" onClick={()=>setMenu(false)}>Syam Prakash<span className="brand-dot">.</span></a><button className="modal-close" onClick={()=>setMenu(false)} aria-label="Close menu">×</button></div><div className="section-kicker">NAVIGATE</div><div className="contact-links"><a className="contact-link" href="#about" onClick={()=>setMenu(false)}>About <Arrow/></a><a className="contact-link" href="#expertise" onClick={()=>setMenu(false)}>Expertise <Arrow/></a><a className="contact-link" href="#skills" onClick={()=>setMenu(false)}>Skills <Arrow/></a><a className="contact-link" href="#projects" onClick={()=>setMenu(false)}>Selected work <Arrow/></a><a className="contact-link" href="#certifications" onClick={()=>setMenu(false)}>Certifications <Arrow/></a><a className="contact-link" href="#contact" onClick={()=>setMenu(false)}>Contact <Arrow/></a></div><a className="pill menu-hire" href="mailto:shyamprakash534@gmail.com" onClick={()=>setMenu(false)}>Let’s connect <Arrow/></a></div></div>}
 
     <section className="hero" id="top">
       <video ref={videoRef} className="hero-video" autoPlay muted loop playsInline preload="metadata" aria-label="Syam Prakash portfolio reel"><source src="hero-video.mp4" type="video/mp4"/></video>
       <div className="hero-video-shade"/>
       <div className="hero-content">
         <div className="hero-copy">
-          <p className="hero-eyebrow">SOFTWARE · PYTHON · AI / ML · CLOUD</p>
-          <h1><span className="intro-light">Hi, I’m Syam</span><br/><span className="dark">Software Developer</span></h1>
+          <h1>Syam Prakash</h1>
           <p className="hero-lead">I build practical software across Python, AI/ML, backend engineering, cloud and data.</p>
           <div className="actions"><a className="pill primary" href="#projects">View My Work <Arrow/></a><a className="pill light" href="#contact">Contact Me</a></div>
         </div>
@@ -88,7 +119,7 @@ export default function Home(){
 
     <section className="section skills reveal-on-scroll" id="skills"><div className="section-kicker">03 / TECHNICAL STACK</div><div className="skills-head"><h2>Technologies I<br/><em>work with.</em></h2><p className="section-intro">A practical toolkit I use to design, build, test and ship working software.</p></div><div className="skills-grid">{Object.entries(skills).map(([group,items],index)=><div className="skill-box" key={group}><span className="skill-index">0{index+1}</span><h3>{group}</h3><div className="skill-tags">{items.map(x=><span key={x}>{x}</span>)}</div></div>)}</div></section>
 
-    <section className="section projects reveal-on-scroll" id="projects"><div className="section-kicker">04 / SELECTED WORK</div><div className="project-intro"><h2>Projects with<br/><em>a purpose.</em></h2><p>Explore real builds, their technical decisions and working demos where available. Open any case study for more details.</p></div><div className="project-grid">{projects.map(p=><ProjectCard key={p.name} p={p} onOpen={()=>setActive(p)}/>)}</div></section>
+    <section className="section projects reveal-on-scroll" id="projects"><div className="section-kicker">04 / SELECTED WORK</div><div className="project-intro"><h2>Projects with<br/><em>a purpose.</em></h2><p>Explore real builds, their technical decisions and working demos where available. Open any case study for more details.</p></div><div className="project-grid">{projects.map(p=><ProjectCard key={p.name} p={p} onOpen={event=>{returnFocusRef.current=event.currentTarget;setActive(p)}}/>)}</div></section>
 
     <section className="section certifications reveal-on-scroll" id="certifications"><div className="section-kicker">05 / LEARNING & CREDENTIALS</div><div className="cert-heading"><h2>Keep learning.<br/><em>Keep building.</em></h2><p className="section-intro">Foundational learning that supports the practical work across AI and cloud.</p></div><div className="credential-track">{certifications.map((cert,index)=><article className="credential-card" key={cert.name}><div className="credential-mark">{index===0?'AI':'AWS'}</div><div className="credential-detail"><small>{cert.issuer}</small><h3>{cert.name}</h3><p>{cert.note}</p></div><span className="credential-arrow">↗</span></article>)}</div></section>
 
@@ -96,8 +127,8 @@ export default function Home(){
 
     <footer className="footer"><span>© 2026 Vemula Syam Prakash</span><span>Python · AI/ML · Cloud · Data</span><a href="#top">BACK TO TOP ↑</a></footer>
 
-    {active&&<div className="modal project-modal" onClick={()=>setActive(null)}><article className="modal-card project-modal-card" onClick={e=>e.stopPropagation()}><button className="modal-close" onClick={()=>setActive(null)} aria-label="Close case study">×</button><div className="section-kicker">{active.num} / {active.tag}</div><h3>{active.name}</h3><p>{active.detail}</p><ul className="evidence">{active.evidence.map(x=><li key={x}>{x}</li>)}</ul><div className="chips">{active.stack.map(x=><span className="chip" key={x}>{x}</span>)}</div><div className="modal-actions"><a className="pill primary" href={active.live} target="_blank" rel="noreferrer">Live Demo <Arrow/></a><a className="pill light" href={active.repo} target="_blank" rel="noreferrer">GitHub <Arrow/></a></div></article></div>}
+    {active&&<div className="modal project-modal" role="dialog" aria-modal="true" aria-label={`${active.name} case study`} onClick={()=>setActive(null)}><article className="modal-card project-modal-card" onClick={e=>e.stopPropagation()}><button className="modal-close" onClick={()=>setActive(null)} aria-label="Close case study">×</button><div className="section-kicker">{active.num} / {active.tag}</div><h3>{active.name}</h3><p>{active.detail}</p><ul className="evidence">{active.evidence.map(x=><li key={x}>{x}</li>)}</ul><div className="chips">{active.stack.map(x=><span className="chip" key={x}>{x}</span>)}</div><div className="modal-actions"><a className="pill primary" href={active.live} target="_blank" rel="noreferrer">Live Demo <Arrow/></a><a className="pill light" href={active.repo} target="_blank" rel="noreferrer">GitHub <Arrow/></a></div></article></div>}
   </main>
 }
 
-function ProjectCard({p,onOpen}){return <article className="project-card" onClick={onOpen} role="button" tabIndex={0} onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')onOpen()}}><div className="project-art"><span className="number">{p.num}</span><div className="orb"/><span className="label">{p.metric}</span></div><div className="project-body"><div className="project-top"><h3>{p.name}</h3><span>↗</span></div><p>{p.desc}</p><div className="chips">{p.stack.map(x=><span className="chip" key={x}>{x}</span>)}</div><div className="project-links"><span>OPEN CASE STUDY</span><Arrow/></div></div></article>}
+function ProjectCard({p,onOpen}){return <button type="button" className="project-card" onClick={onOpen} onPointerMove={event=>{if(event.pointerType==='touch')return;const rect=event.currentTarget.getBoundingClientRect();event.currentTarget.style.setProperty('--spot-x',String(event.clientX-rect.left)+'px');event.currentTarget.style.setProperty('--spot-y',String(event.clientY-rect.top)+'px')}}><div className="project-art"><span className="number">{p.num}</span><div className="orb"/><span className="label">{p.metric}</span></div><div className="project-body"><div className="project-top"><h3>{p.name}</h3><span>↗</span></div><p>{p.desc}</p><div className="chips">{p.stack.map(x=><span className="chip" key={x}>{x}</span>)}</div><div className="project-links"><span>OPEN CASE STUDY</span><Arrow/></div></div></button>}
