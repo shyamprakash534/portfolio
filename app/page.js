@@ -25,8 +25,9 @@ const skills = {
 };
 
 const certifications = [
-  {name:'Google AI Professional',issuer:'Google',note:'Applied AI learning and practical workflows'},
-  {name:'AWS Cloud Practitioner',issuer:'Amazon Web Services',note:'Cloud fundamentals and core AWS concepts'}
+  {name:'Google AI Professional',issuer:'Google',note:'Applied AI learning and practical workflows',mark:'AI'},
+  {name:'AWS Cloud Practitioner',issuer:'Amazon Web Services',note:'Cloud fundamentals and core AWS concepts',mark:'AWS'},
+  {name:'Oracle Certification',issuer:'Oracle',note:'Oracle technology certification',mark:'OCI'}
 ];
 
 function Arrow(){return <span aria-hidden="true">↗</span>}
@@ -35,122 +36,29 @@ export default function Home(){
   const [menu,setMenu]=useState(false),[muted,setMuted]=useState(true),[active,setActive]=useState(null),[projectFilter,setProjectFilter]=useState('All');
   const videoRef=useRef(null), progressRef=useRef(null), menuButtonRef=useRef(null), returnFocusRef=useRef(null);
 
-  useEffect(()=>{
-    document.body.style.overflow=menu||active?'hidden':'';
-    return()=>{document.body.style.overflow=''};
-  },[menu,active]);
-
-  useEffect(()=>{
-    const closeOnEscape=event=>{if(event.key==='Escape'){setMenu(false);setActive(null);}};
-    window.addEventListener('keydown',closeOnEscape);
-    return()=>window.removeEventListener('keydown',closeOnEscape);
-  },[]);
-
-  useEffect(()=>{
-    if(menu||active){
-      const frame=requestAnimationFrame(()=>document.querySelector(menu?'.menu-modal .modal-close':'.project-modal .modal-close')?.focus());
-      return()=>cancelAnimationFrame(frame);
-    }
-    returnFocusRef.current?.focus?.();
-    returnFocusRef.current=null;
-  },[menu,active]);
-
-  useEffect(()=>{
-    let frame=0;
-    const updateProgress=()=>{
-      if(frame)cancelAnimationFrame(frame);
-      frame=requestAnimationFrame(()=>{
-        const max=document.documentElement.scrollHeight-window.innerHeight;
-        progressRef.current?.style.setProperty('--scroll-progress',String(max>0?Math.min(1,window.scrollY/max):0));
-        frame=0;
-      });
-    };
-    window.addEventListener('scroll',updateProgress,{passive:true});
-    window.addEventListener('resize',updateProgress);
-    updateProgress();
-    return()=>{window.removeEventListener('scroll',updateProgress);window.removeEventListener('resize',updateProgress);if(frame)cancelAnimationFrame(frame);};
-  },[]);
-
-  useEffect(()=>{
-    const items=document.querySelectorAll('.reveal-on-scroll');
-    if(!('IntersectionObserver' in window)){items.forEach(item=>item.classList.add('is-visible'));return;}
-    const observer=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}
-      });
-    },{threshold:0.12});
-    items.forEach(item=>observer.observe(item));
-    return()=>observer.disconnect();
-  },[]);
-
-  const toggleMute=()=>{
-    if(!videoRef.current)return;
-    videoRef.current.muted=!videoRef.current.muted;
-    setMuted(videoRef.current.muted);
-  };
-
+  useEffect(()=>{document.body.style.overflow=menu||active?'hidden':'';return()=>{document.body.style.overflow=''};},[menu,active]);
+  useEffect(()=>{const closeOnEscape=event=>{if(event.key==='Escape'){setMenu(false);setActive(null);}};window.addEventListener('keydown',closeOnEscape);return()=>window.removeEventListener('keydown',closeOnEscape);},[]);
+  useEffect(()=>{if(menu||active){const frame=requestAnimationFrame(()=>document.querySelector(menu?'.menu-modal .modal-close':'.project-modal .modal-close')?.focus());return()=>cancelAnimationFrame(frame);}returnFocusRef.current?.focus?.();returnFocusRef.current=null;},[menu,active]);
+  useEffect(()=>{let frame=0;const updateProgress=()=>{if(frame)cancelAnimationFrame(frame);frame=requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-window.innerHeight;progressRef.current?.style.setProperty('--scroll-progress',String(max>0?Math.min(1,window.scrollY/max):0));frame=0;});};window.addEventListener('scroll',updateProgress,{passive:true});window.addEventListener('resize',updateProgress);updateProgress();return()=>{window.removeEventListener('scroll',updateProgress);window.removeEventListener('resize',updateProgress);if(frame)cancelAnimationFrame(frame);};},[]);
+  useEffect(()=>{const items=document.querySelectorAll('.reveal-on-scroll');if(!('IntersectionObserver' in window)){items.forEach(item=>item.classList.add('is-visible'));return;}const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');observer.unobserve(entry.target);}});},{threshold:0.12});items.forEach(item=>observer.observe(item));return()=>observer.disconnect();},[]);
+  const toggleMute=()=>{if(!videoRef.current)return;videoRef.current.muted=!videoRef.current.muted;setMuted(videoRef.current.muted);};
   const visibleProjectCount=projectFilter==='All'?projects.length:projects.filter(p=>p.group===projectFilter).length;
 
-  return <main className="site">
-    <div ref={progressRef} className="scroll-progress" aria-hidden="true"/>
-    <nav className="nav" aria-label="Main navigation">
-      <a href="#top" className="brand">Syam Prakash<span className="brand-dot">.</span></a>
-      <div className="navlinks"><a href="#about">About</a><a href="#expertise">Expertise</a><a href="#skills">Skills</a><a href="#projects">Work</a><a href="#contact">Contact</a></div>
-      <div className="nav-right"><span className="availability"><b/> Open to opportunities</span><button ref={menuButtonRef} className="menu-button" aria-label="Open menu" aria-expanded={menu} aria-controls="site-menu" onClick={event=>{returnFocusRef.current=event.currentTarget;setMenu(true)}}><span>Menu</span></button></div>
-    </nav>
-
+  return <main className="site"><div ref={progressRef} className="scroll-progress" aria-hidden="true"/>
+    <nav className="nav" aria-label="Main navigation"><a href="#top" className="brand">Syam Prakash<span className="brand-dot">.</span></a><div className="navlinks"><a href="#about">About</a><a href="#expertise">Expertise</a><a href="#skills">Skills</a><a href="#projects">Work</a><a href="#contact">Contact</a></div><div className="nav-right"><span className="availability"><b/> Open to opportunities</span><button ref={menuButtonRef} className="menu-button" aria-label="Open menu" aria-expanded={menu} aria-controls="site-menu" onClick={event=>{returnFocusRef.current=event.currentTarget;setMenu(true)}}><span>Menu</span></button></div></nav>
     {menu&&<div id="site-menu" className="modal menu-modal" role="dialog" aria-modal="true" aria-label="Site navigation" onClick={()=>setMenu(false)}><div className="modal-card menu-card" onClick={e=>e.stopPropagation()}><div className="menu-card-head"><a href="#top" className="brand" onClick={()=>setMenu(false)}>Syam Prakash<span className="brand-dot">.</span></a><button className="modal-close" onClick={()=>setMenu(false)} aria-label="Close menu">×</button></div><div className="section-kicker">NAVIGATE</div><div className="contact-links"><a className="contact-link" href="#about" onClick={()=>setMenu(false)}>About <Arrow/></a><a className="contact-link" href="#expertise" onClick={()=>setMenu(false)}>Expertise <Arrow/></a><a className="contact-link" href="#skills" onClick={()=>setMenu(false)}>Skills <Arrow/></a><a className="contact-link" href="#projects" onClick={()=>setMenu(false)}>Selected work <Arrow/></a><a className="contact-link" href="#certifications" onClick={()=>setMenu(false)}>Certifications <Arrow/></a><a className="contact-link" href="#contact" onClick={()=>setMenu(false)}>Contact <Arrow/></a></div><a className="pill menu-hire" href="mailto:shyamprakash534@gmail.com" onClick={()=>setMenu(false)}>Let’s connect <Arrow/></a></div></div>}
-
-    <section className="hero" id="top">
-      <video ref={videoRef} className="hero-video" autoPlay muted loop playsInline preload="metadata" aria-label="Syam Prakash portfolio reel"><source src="hero-video.mp4" type="video/mp4"/></video>
-      <div className="hero-video-shade"/>
-      <div className="hero-content">
-        <div className="hero-copy">
-          <h1>Syam Prakash</h1>
-          <p className="hero-lead">I build practical software across Python, AI/ML, backend engineering, cloud and data.</p>
-          <div className="actions"><a className="pill primary" href="#projects">View My Work <Arrow/></a><a className="pill light" href="#contact">Contact Me</a></div>
-        </div>
-      </div>
-      <div className="hero-tools"><button className="mute" onClick={toggleMute} aria-label={muted?'Unmute portfolio reel':'Mute portfolio reel'}>{muted?'◖×':'◖))'}</button><span className="reel-label">{muted?'UNMUTE REEL':'MUTE REEL'}</span></div>
-      <div className="scroll-cue">SCROLL TO EXPLORE <span>↓</span></div>
-    </section>
-
+    <section className="hero" id="top"><video ref={videoRef} className="hero-video" autoPlay muted loop playsInline preload="metadata" aria-label="Syam Prakash portfolio reel"><source src="hero-video.mp4" type="video/mp4"/></video><div className="hero-video-shade"/><div className="hero-content"><div className="hero-copy"><h1>Syam Prakash</h1><p className="hero-lead">I build practical software across Python, AI/ML, backend engineering, cloud and data.</p><div className="actions"><a className="pill primary" href="#projects">View My Work <Arrow/></a><a className="pill light" href="#contact">Contact Me</a></div></div></div><div className="hero-tools"><button className="mute" onClick={toggleMute} aria-label={muted?'Unmute portfolio reel':'Mute portfolio reel'}>{muted?'◖×':'◖))'}</button><span className="reel-label">{muted?'UNMUTE REEL':'MUTE REEL'}</span></div><div className="scroll-cue">SCROLL TO EXPLORE <span>↓</span></div></section>
     <section className="section about reveal-on-scroll" id="about"><div className="section-kicker">01 / ABOUT ME</div><div className="about-grid"><div className="about-intro"><h2>Hello<span>!</span></h2><p className="about-copy">I’m Vemula Syam Prakash, an MCA graduate with a Statistics foundation. I enjoy the space between an idea and a working system — designing APIs, training models, building data workflows and shipping usable applications.</p><p className="about-copy">My focus is practical engineering: clean architecture, evidence over hype, reproducible systems and software that can actually run.</p></div><div className="principle-panel"><span className="panel-label">HOW I LIKE TO BUILD</span><div className="principles"><span><b>01</b> Practical AI</span><span><b>02</b> Backend systems</span><span><b>03</b> Cloud & data</span><span><b>04</b> Maintainable code</span></div><p className="about-note">Curious by default. Grounded in implementation.</p></div></div></section>
-
     <section className="section expertise reveal-on-scroll" id="expertise"><div className="section-kicker">02 / WHAT I DO</div><div className="expertise-head"><div><h2>Building useful<br/><em>digital systems.</em></h2></div><p className="section-intro">From APIs and AI prototypes to data workflows, I focus on systems that solve a real problem and can be explained, tested and improved.</p></div><div className="expertise-grid">{expertise.map(item=><article className="expertise-card" key={item.num}><div className="expertise-card-top"><span>{item.num}</span><span className="expertise-symbol">↘</span></div><small>{item.category}</small><h3>{item.title}</h3><p>{item.text}</p><div className="expertise-stack">{item.stack}</div></article>)}</div></section>
-
     <section className="section skills reveal-on-scroll" id="skills"><div className="section-kicker">03 / TECHNICAL STACK</div><div className="skills-head"><h2>Technologies I<br/><em>work with.</em></h2><p className="section-intro">A practical toolkit I use to design, build, test and ship working software.</p></div><div className="skills-grid">{Object.entries(skills).map(([group,items],index)=><div className="skill-box" key={group}><span className="skill-index">0{index+1}</span><h3>{group}</h3><div className="skill-tags">{items.map(x=><span key={x}>{x}</span>)}</div></div>)}</div></section>
-
-    <section className="section projects reveal-on-scroll" id="projects">
-      <div className="section-kicker">04 / SELECTED WORK</div>
-      <div className="project-intro"><div><p className="project-overline">SELECTED BUILDS / 2024—2026</p><h2>Less talk.<br/><em>More shipped.</em></h2></div><p>Small systems, useful products and experiments that turn an idea into something you can explore. Filter the work, then open a case study.</p></div>
-      <div className="project-controls">
-        <div className="project-filters" role="group" aria-label="Filter projects by discipline">
-          {['All','AI & ML','Backend','Cloud & Data'].map(label=><button type="button" key={label} className={projectFilter===label?'active':''} aria-pressed={projectFilter===label} onClick={()=>setProjectFilter(label)}>{label}<span>{label==='All'?projects.length:projects.filter(p=>p.group===label).length.toString().padStart(2,'0')}</span></button>)}
-        </div>
-        <span className="project-count"><b>{visibleProjectCount.toString().padStart(2,'0')}</b> / 06 PROJECTS</span>
-      </div>
-      <div className="project-grid" aria-live="polite">{projects.filter(p=>projectFilter==='All'||p.group===projectFilter).map(p=><ProjectCard key={p.name} p={p} onOpen={event=>{returnFocusRef.current=event.currentTarget;setActive(p)}}/>)}</div>
-      <div className="project-endnote"><span>BUILT WITH CURIOSITY</span><span>OPEN A CASE STUDY <span aria-hidden="true">↗</span></span></div>
-    </section>
-
-    <section className="section certifications reveal-on-scroll" id="certifications"><div className="section-kicker">05 / LEARNING & CREDENTIALS</div><div className="cert-heading"><h2>Keep learning.<br/><em>Keep building.</em></h2><p className="section-intro">Foundational learning that supports the practical work across AI and cloud.</p></div><div className="credential-track">{certifications.map((cert,index)=><article className="credential-card" key={cert.name}><div className="credential-mark">{index===0?'AI':'AWS'}</div><div className="credential-detail"><small>{cert.issuer}</small><h3>{cert.name}</h3><p>{cert.note}</p></div><span className="credential-arrow">↗</span></article>)}</div></section>
-
+    <section className="section projects reveal-on-scroll" id="projects"><div className="section-kicker">04 / SELECTED WORK</div><div className="project-intro"><div><p className="project-overline">SELECTED BUILDS / 2024—2026</p><h2>Less talk.<br/><em>More shipped.</em></h2></div><p>Small systems, useful products and experiments that turn an idea into something you can explore. Filter the work, then open a case study.</p></div><div className="project-controls"><div className="project-filters" role="group" aria-label="Filter projects by discipline">{['All','AI & ML','Backend','Cloud & Data'].map(label=><button type="button" key={label} className={projectFilter===label?'active':''} aria-pressed={projectFilter===label} onClick={()=>setProjectFilter(label)}>{label}<span>{label==='All'?projects.length:projects.filter(p=>p.group===label).length.toString().padStart(2,'0')}</span></button>)}</div><span className="project-count"><b>{visibleProjectCount.toString().padStart(2,'0')}</b> / 06 PROJECTS</span></div><div className="project-grid" aria-live="polite">{projects.filter(p=>projectFilter==='All'||p.group===projectFilter).map(p=><ProjectCard key={p.name} p={p} onOpen={event=>{returnFocusRef.current=event.currentTarget;setActive(p)}}/>)}</div><div className="project-endnote"><span>BUILT WITH CURIOSITY</span><span>OPEN A CASE STUDY <span aria-hidden="true">↗</span></span></div></section>
+    <section className="section certifications reveal-on-scroll" id="certifications"><div className="section-kicker">05 / LEARNING & CREDENTIALS</div><div className="cert-heading"><h2>Keep learning.<br/><em>Keep building.</em></h2><p className="section-intro">Foundational learning that supports the practical work across AI, cloud and enterprise technology.</p></div><div className="credential-track">{certifications.map(cert=><article className="credential-card" key={cert.name}><div className="credential-mark">{cert.mark}</div><div className="credential-detail"><small>{cert.issuer}</small><h3>{cert.name}</h3><p>{cert.note}</p></div><span className="credential-arrow">↗</span></article>)}</div></section>
     <section className="section contact reveal-on-scroll" id="contact"><div className="contact-grid"><div><div className="section-kicker">06 / LET’S CONNECT</div><h2>Have a good<br/><em>problem?</em></h2><p className="contact-copy">I’m open to software development, Python, AI/ML, backend, data and cloud opportunities. If you have a role, project or idea worth discussing, let’s talk.</p></div><div className="contact-links"><a className="contact-link" href="mailto:shyamprakash534@gmail.com">Email <Arrow/></a><a className="contact-link" href="https://www.linkedin.com/in/shyam-prakash-vemula-721029263/" target="_blank" rel="noreferrer">LinkedIn <Arrow/></a><a className="contact-link" href="https://github.com/shyamprakash534" target="_blank" rel="noreferrer">GitHub <Arrow/></a><a className="contact-link" href="Syam_Prakash_AI_ML_Resume.pdf" download>Download Resume <Arrow/></a></div></div></section>
-
     <footer className="footer"><span>© 2026 Vemula Syam Prakash</span><span>Python · AI/ML · Cloud · Data</span><a href="#top">BACK TO TOP ↑</a></footer>
-
     {active&&<div className="modal project-modal" role="dialog" aria-modal="true" aria-label={`${active.name} case study`} onClick={()=>setActive(null)}><article className="modal-card project-modal-card" onClick={e=>e.stopPropagation()}><button className="modal-close" onClick={()=>setActive(null)} aria-label="Close case study">×</button><div className="section-kicker">{active.num} / {active.tag}</div><h3>{active.name}</h3><p>{active.detail}</p><ul className="evidence">{active.evidence.map(x=><li key={x}>{x}</li>)}</ul><div className="chips">{active.stack.map(x=><span className="chip" key={x}>{x}</span>)}</div><div className="modal-actions"><a className="pill primary" href={active.live} target="_blank" rel="noreferrer">Live Demo <Arrow/></a><a className="pill light" href={active.repo} target="_blank" rel="noreferrer">GitHub <Arrow/></a></div></article></div>}
   </main>
 }
 
 function ProjectCard({p,onOpen}){return <button type="button" className={`project-card project-${p.visual}`} aria-label={`Open ${p.name} case study`} onClick={onOpen} onPointerMove={event=>{if(event.pointerType==='touch')return;const rect=event.currentTarget.getBoundingClientRect();event.currentTarget.style.setProperty('--spot-x',String(event.clientX-rect.left)+'px');event.currentTarget.style.setProperty('--spot-y',String(event.clientY-rect.top)+'px')}}><div className={`project-art visual-${p.visual}`} aria-hidden="true"><span className="number">{p.num}</span><ProjectVisual type={p.visual}/><span className="label">{p.metric}</span></div><div className="project-body"><div className="project-top"><div><span className="project-category">{p.group}</span><h3>{p.name}</h3></div><span className="project-arrow">↗</span></div><p>{p.desc}</p><div className="chips">{p.stack.map(x=><span className="chip" key={x}>{x}</span>)}</div><div className="project-links"><span>EXPLORE CASE STUDY</span><Arrow/></div></div></button>}
 
-function ProjectVisual({type}){
-  if(type==='terminal')return <div className="visual-ui terminal-ui"><div className="ui-top"><div className="window-dots"><i/><i/><i/></div><span>codeforge / agent-run</span><span className="ui-live"><i/>RUNNING</span></div><div className="terminal-content"><div className="terminal-steps"><span className="done">01</span><span className="done">02</span><span className="done">03</span><span>04</span><span>05</span></div><div className="code-lines"><p><b>const</b> workflow <em>=</em> <strong>await</strong> agent.run()</p><p><i>›</i> planner <b>✓</b> <span>completed</span></p><p><i>›</i> architect <b>✓</b> <span>completed</span></p><p><i>›</i> tests <b>✓</b> <span>12 passed</span></p><p className="terminal-success"><i>✓</i> review complete <span>0 blockers</span></p></div></div><div className="ui-footer"><span>MODEL PIPELINE</span><span>98ms <b>●</b> HEALTHY</span></div></div>;
-  if(type==='network')return <div className="visual-ui network-ui"><div className="network-caption"><span>REQUEST FLOW</span><span>LIVE TOPOLOGY</span></div><div className="network-map"><div className="network-line line-a"/><div className="network-line line-b"/><div className="network-line line-c"/><div className="network-node node-client"><span>↗</span><small>CLIENT</small></div><div className="network-node node-api"><span>API</span><small>GIN</small></div><div className="network-node node-cache"><span>◈</span><small>REDIS</small></div><div className="network-node node-db"><span>▤</span><small>POSTGRES</small></div><div className="network-node node-analytics"><span>▥</span><small>EVENTS</small></div></div><div className="network-legend"><span><i/> CACHE HIT</span><span><i/> ANALYTICS STREAM</span></div></div>;
-  if(type==='rag')return <div className="visual-ui rag-ui"><div className="rag-top"><span>GROUNDING / SESSION 08</span><span className="rag-badge">SOURCES ATTACHED</span></div><div className="rag-layout"><div className="rag-sources"><b>RETRIEVED</b><div className="source-doc active"><i>PDF</i><span>architecture.pdf<small>chunk 04 · 0.94</small></span></div><div className="source-doc"><i>TXT</i><span>notes.txt<small>chunk 12 · 0.87</small></span></div><div className="source-doc"><i>MD</i><span>readme.md<small>chunk 02 · 0.82</small></span></div></div><div className="rag-answer"><span className="answer-dot">✳</span><b>Answer grounded</b><p>Relevant context found in the source documents.</p><div className="answer-source">[1] architecture.pdf · p. 3</div><div className="answer-source">[2] notes.txt · section 2</div></div></div></div>;
-  if(type==='pipeline')return <div className="visual-ui pipeline-ui"><div className="pipeline-head"><div><span>BUSINESS INTELLIGENCE</span><b>Commerce overview</b></div><span className="pipeline-period">LAST 30 DAYS⌄</span></div><div className="pipeline-metrics"><div><small>REVENUE TREND</small><b>+18.6%</b><span>vs. previous period</span></div><div><small>ORDER VOLUME</small><b>2,480</b><span>validated records</span></div></div><div className="bar-chart"><div className="chart-axis"><span>100</span><span>50</span><span>0</span></div><div className="bars">{[34,50,41,67,48,76,57,86,65,94,71,82].map((height,i)=><i key={i} style={{'--bar-height':height+'%'}}/>)}</div></div><div className="pipeline-stages"><span>RAW S3</span><b>→</b><span>GLUE ETL</span><b>→</b><span>ATHENA</span></div></div>;
-  if(type==='jobs')return <div className="visual-ui jobs-ui"><div className="jobs-top"><div><span>CAREER MATCH / 2026</span><b>Recommended roles</b></div><div className="match-score"><b>92</b><small>FIT SCORE</small></div></div><div className="jobs-search"><span>⌕</span> Python · AI · Hyderabad <i>⌘ K</i></div><div className="job-row"><div className="job-mark">A</div><div><b>Python Engineer</b><small>Product & Platform · Hyderabad</small></div><span className="fit">94%</span></div><div className="job-row"><div className="job-mark">✳</div><div><b>Applied AI Associate</b><small>AI Systems · Bengaluru</small></div><span className="fit">91%</span></div><div className="job-row"><div className="job-mark">◫</div><div><b>Backend Developer</b><small>Engineering · Remote</small></div><span className="fit">87%</span></div><div className="jobs-foot"><span>RANKED BY SKILLS + LOCATION</span><span>↗</span></div></div>;
-  return <div className="visual-ui model-ui"><div className="model-top"><span>MODEL EVALUATION</span><span className="model-tag">ML / PIPELINE</span></div><div className="model-main"><div className="model-gauge"><div className="gauge-inner"><b>ML</b><small>INFERENCE</small></div></div><div className="model-readout"><small>CLASSIFIER</small><b>Random Forest</b><span>Input features <i>validated</i></span><span>Prediction <i>generated</i></span><span>Safety checks <i>enabled</i></span></div></div><div className="model-bottom"><span>MODEL OUTPUT</span><span>EDUCATIONAL DEMO ONLY</span></div></div>;
-}
+function ProjectVisual({type}){if(type==='terminal')return <div className="visual-ui terminal-ui"><div className="ui-top"><div className="window-dots"><i/><i/><i/></div><span>codeforge / agent-run</span><span className="ui-live"><i/>RUNNING</span></div><div className="terminal-content"><div className="terminal-steps"><span className="done">01</span><span className="done">02</span><span className="done">03</span><span>04</span><span>05</span></div><div className="code-lines"><p><b>const</b> workflow <em>=</em> <strong>await</strong> agent.run()</p><p><i>›</i> planner <b>✓</b> <span>completed</span></p><p><i>›</i> architect <b>✓</b> <span>completed</span></p><p><i>›</i> tests <b>✓</b> <span>12 passed</span></p><p className="terminal-success"><i>✓</i> review complete <span>0 blockers</span></p></div></div><div className="ui-footer"><span>MODEL PIPELINE</span><span>98ms <b>●</b> HEALTHY</span></div></div>;if(type==='network')return <div className="visual-ui network-ui"><div className="network-caption"><span>REQUEST FLOW</span><span>LIVE TOPOLOGY</span></div><div className="network-map"><div className="network-line line-a"/><div className="network-line line-b"/><div className="network-line line-c"/><div className="network-node node-client"><span>↗</span><small>CLIENT</small></div><div className="network-node node-api"><span>API</span><small>GIN</small></div><div className="network-node node-cache"><span>◈</span><small>REDIS</small></div><div className="network-node node-db"><span>▤</span><small>POSTGRES</small></div><div className="network-node node-analytics"><span>▥</span><small>EVENTS</small></div></div><div className="network-legend"><span><i/> CACHE HIT</span><span><i/> ANALYTICS STREAM</span></div></div>;if(type==='rag')return <div className="visual-ui rag-ui"><div className="rag-top"><span>GROUNDING / SESSION 08</span><span className="rag-badge">SOURCES ATTACHED</span></div><div className="rag-layout"><div className="rag-sources"><b>RETRIEVED</b><div className="source-doc active"><i>PDF</i><span>architecture.pdf<small>chunk 04 · 0.94</small></span></div><div className="source-doc"><i>TXT</i><span>notes.txt<small>chunk 12 · 0.87</small></span></div><div className="source-doc"><i>MD</i><span>readme.md<small>chunk 02 · 0.82</small></span></div></div><div className="rag-answer"><span className="answer-dot">✳</span><b>Answer grounded</b><p>Relevant context found in the source documents.</p><div className="answer-source">[1] architecture.pdf · p. 3</div><div className="answer-source">[2] notes.txt · section 2</div></div></div></div>;if(type==='pipeline')return <div className="visual-ui pipeline-ui"><div className="pipeline-head"><div><span>BUSINESS INTELLIGENCE</span><b>Commerce overview</b></div><span className="pipeline-period">LAST 30 DAYS⌄</span></div><div className="pipeline-metrics"><div><small>REVENUE TREND</small><b>+18.6%</b><span>vs. previous period</span></div><div><small>ORDER VOLUME</small><b>2,480</b><span>validated records</span></div></div><div className="bar-chart"><div className="chart-axis"><span>100</span><span>50</span><span>0</span></div><div className="bars">{[34,50,41,67,48,76,57,86,65,94,71,82].map((height,i)=><i key={i} style={{'--bar-height':height+'%'}}/>)}</div></div><div className="pipeline-stages"><span>RAW S3</span><b>→</b><span>GLUE ETL</span><b>→</b><span>ATHENA</span></div></div>;if(type==='jobs')return <div className="visual-ui jobs-ui"><div className="jobs-top"><div><span>CAREER MATCH / 2026</span><b>Recommended roles</b></div><div className="match-score"><b>92</b><small>FIT SCORE</small></div></div><div className="jobs-search"><span>⌕</span> Python · AI · Hyderabad <i>⌘ K</i></div><div className="job-row"><div className="job-mark">A</div><div><b>Python Engineer</b><small>Product & Platform · Hyderabad</small></div><span className="fit">94%</span></div><div className="job-row"><div className="job-mark">✳</div><div><b>Applied AI Associate</b><small>AI Systems · Bengaluru</small></div><span className="fit">91%</span></div><div className="job-row"><div className="job-mark">◫</div><div><b>Backend Developer</b><small>Engineering · Remote</small></div><span className="fit">87%</span></div><div className="jobs-foot"><span>RANKED BY SKILLS + LOCATION</span><span>↗</span></div></div>;return <div className="visual-ui model-ui"><div className="model-top"><span>MODEL EVALUATION</span><span className="model-tag">ML / PIPELINE</span></div><div className="model-main"><div className="model-gauge"><div className="gauge-inner"><b>ML</b><small>INFERENCE</small></div></div><div className="model-readout"><small>CLASSIFIER</small><b>Random Forest</b><span>Input features <i>validated</i></span><span>Prediction <i>generated</i></span><span>Safety checks <i>enabled</i></span></div></div><div className="model-bottom"><span>MODEL OUTPUT</span><span>EDUCATIONAL DEMO ONLY</span></div></div>}
