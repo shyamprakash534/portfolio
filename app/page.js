@@ -1,173 +1,68 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const projects = [
-  {name:"CodeForge",tag:"AI / GENAI",num:"01",desc:"A security-conscious multi-agent engineering workspace for generating, testing, repairing and reviewing code.",stack:["Python", "LangGraph", "FastAPI", "Docker"],repo:"https://github.com/shyamprakash534/Codeforge",live:"https://codeforge-3l85.onrender.com",metric:"MULTI-AGENT WORKSPACE",detail:"Turns a software request into a controlled workflow of specialised agents, with an autonomous test-debug-retest loop and automated security checks.",evidence:["Workflow: Plan → Research → Architect → Code → Test → Debug → Review → Security → Approval → PR", "FastAPI service with a Streamlit interface; Docker and monitoring config in the repo", "Automated tests and GitHub Actions CI"],note:"Submit a repository task in the live app and inspect the workflow result."},
-  {name:"NanoLink",tag:"BACKEND / SYSTEMS",num:"02",desc:"A distributed URL shortener engineered around caching, rate limiting, analytics and observability.",stack:["Go", "Gin", "PostgreSQL", "Redis", "ClickHouse"],repo:"https://github.com/shyamprakash534/nanolink1",live:"https://nanolink1.onrender.com",metric:"DISTRIBUTED SYSTEM",detail:"REST APIs for creation, redirection and QR generation, built around a lightweight redirect path with asynchronous analytics.",evidence:["Redis caching and rate limiting, PostgreSQL persistence, ClickHouse analytics", "Docker Compose, Terraform for AWS, and Prometheus and Grafana observability in the repo", "Go tests, a latency benchmark script and GitHub Actions CI"],note:"The live deployment runs the core shortener with ClickHouse analytics disabled, because no production ClickHouse is attached."},
-  {name:"Grounded RAG",tag:"GENAI / RAG",num:"03",desc:"A local-first RAG system that retrieves relevant knowledge and produces source-backed answers.",stack:["Python", "FastAPI", "ChromaDB", "Ollama"],repo:"https://github.com/shyamprakash534/grounded-rag",live:"https://grounded-rag-oww5.onrender.com",metric:"SOURCE-GROUNDED AI",detail:"Upload PDF, TXT or Markdown, then ask questions and get answers that cite the retrieved source excerpts.",evidence:["Embeddings generated locally with Ollama and stored in ChromaDB", "Answers cite retrieved sources as [S1], [S2]; documents can be listed and deleted", "Unit tests, GitHub Actions CI and optional OpenAI-compatible provider support"],note:"The public instance serves the UI and API. The no-API-key AI mode runs Ollama locally, so full answers need Ollama on your machine."},
-  {name:"AWS E-Commerce Pipeline",tag:"CLOUD / DATA",num:"04",desc:"A Streamlit analytics app for e-commerce data, built around a designed raw → curated → analytics AWS pipeline.",stack:["Streamlit", "Pandas", "S3", "Glue", "Athena"],repo:"https://github.com/shyamprakash534/aws-ecommerce-data-pipeline",live:"https://aws-ecommerce-data-pipeline.onrender.com",metric:"ETL / ANALYTICS APP",detail:"CSV upload and validation with revenue, order-volume and AOV KPIs, trend analysis and late-delivery insights.",evidence:["Designed flow: raw S3 → AWS Glue → curated S3 → Athena → dashboard", "Curated tables structured by sales, category and delivery dimensions", "GitHub Actions CI"],note:"The AWS flow is the intended design and the repo states it is not provisioned in a live AWS account. The live demo is the Streamlit analytics layer."},
-  {name:"JobMatch AI",tag:"PYTHON / AI",num:"05",desc:"A source-first job matching product that parses resumes and ranks opportunities with weighted relevance.",stack:["Python", "FastAPI", "httpx", "pypdf"],repo:"https://github.com/shyamprakash534/ai-job-application-tracker",live:"https://ai-job-application-tracker-o9vp.onrender.com",metric:"PRODUCT ENGINEERING",detail:"Upload a PDF or DOCX resume, add skills and locations, and get ranked jobs from public sources.",evidence:["Jobs come from the public Jobicy and Hopin Jobs APIs, called server-side", "Weighted score: skills 35%, resume relevance 30%, location 20%, eligibility 10%, role 5%", "View & Apply opens the original listing, never a guessed application URL"],note:""},
-  {name:"Drug & Dosage Recommender",tag:"MACHINE LEARNING",num:"06",desc:"A Flask machine-learning prototype that predicts drugs and dosages, with rule-based safety checks. Educational demo, not medical advice.",stack:["Python", "Scikit-learn", "Flask", "Gunicorn"],repo:"https://github.com/shyamprakash534/drug-recommendation",live:"https://drug-recommendation-5uxr.onrender.com",metric:"EDUCATIONAL ML DEMO",detail:"An end-to-end ML application from model training through inference to a web interface and PDF report.",evidence:["Random Forest predicts the drug; Gradient Boosting predicts the dosage", "Rule-based treatment scheduling and safety checks", "Model persistence with Joblib, PDF reports, served with Gunicorn"],note:"Educational prototype for software-engineering demonstration. It is not medical advice."}
+  {name:'CodeForge',tag:'AI / GENAI',num:'01',desc:'A security-conscious multi-agent engineering workspace for generating, testing, repairing and reviewing code.',stack:['Python','LangGraph','FastAPI','Docker'],repo:'https://github.com/shyamprakash534/Codeforge',live:'https://codeforge-3l85.onrender.com',metric:'MULTI-AGENT WORKSPACE',detail:'Plan → research → architect → code → test → debug → review → security → approval.',evidence:['Specialised multi-agent workflow','FastAPI + Streamlit + Docker','Automated tests and GitHub Actions CI']},
+  {name:'NanoLink',tag:'BACKEND / SYSTEMS',num:'02',desc:'A distributed URL shortener engineered around caching, rate limiting, analytics and observability.',stack:['Go','Gin','PostgreSQL','Redis','ClickHouse'],repo:'https://github.com/shyamprakash534/nanolink1',live:'https://nanolink1.onrender.com',metric:'DISTRIBUTED SYSTEM',detail:'REST APIs for URL creation, redirection and QR generation with a lightweight redirect path and analytics.',evidence:['Redis caching and rate limiting','PostgreSQL + ClickHouse analytics','Docker Compose, Terraform, Prometheus and Grafana']},
+  {name:'Grounded RAG',tag:'GENAI / RAG',num:'03',desc:'A local-first RAG system that retrieves relevant knowledge and produces source-backed answers.',stack:['Python','FastAPI','ChromaDB','Ollama'],repo:'https://github.com/shyamprakash534/grounded-rag',live:'https://grounded-rag-oww5.onrender.com',metric:'SOURCE-GROUNDED AI',detail:'Upload PDF, TXT or Markdown and ask questions with answers grounded in retrieved source excerpts.',evidence:['Local embeddings with Ollama + ChromaDB','Source citations in generated answers','Unit tests and GitHub Actions CI']},
+  {name:'AWS E-Commerce Pipeline',tag:'CLOUD / DATA',num:'04',desc:'An analytics application built around a designed raw → curated → analytics AWS pipeline.',stack:['Streamlit','Pandas','S3','Glue','Athena'],repo:'https://github.com/shyamprakash534/aws-ecommerce-data-pipeline',live:'https://aws-ecommerce-data-pipeline.onrender.com',metric:'ETL / ANALYTICS',detail:'CSV validation, revenue, order-volume, AOV, trends and late-delivery insights.',evidence:['Raw S3 → Glue → curated S3 → Athena design','Analytics dashboard with business KPIs','GitHub Actions CI']},
+  {name:'JobMatch AI',tag:'PYTHON / AI',num:'05',desc:'A source-first job matching product that parses resumes and ranks opportunities with weighted relevance.',stack:['Python','FastAPI','httpx','pypdf'],repo:'https://github.com/shyamprakash534/ai-job-application-tracker',live:'https://ai-job-application-tracker-o9vp.onrender.com',metric:'PRODUCT ENGINEERING',detail:'Upload a resume, add skills and locations, and get ranked jobs from public sources.',evidence:['Public job APIs called server-side','Weighted relevance scoring','Original listing links rather than guessed application URLs']},
+  {name:'Drug & Dosage Recommender',tag:'MACHINE LEARNING',num:'06',desc:'A Flask machine-learning prototype with rule-based safety checks. Educational demo, not medical advice.',stack:['Python','Scikit-learn','Flask','Gunicorn'],repo:'https://github.com/shyamprakash534/drug-recommendation',live:'https://drug-recommendation-5uxr.onrender.com',metric:'EDUCATIONAL ML DEMO',detail:'End-to-end ML application from model training and inference to a web interface and PDF report.',evidence:['Random Forest drug prediction','Gradient Boosting dosage prediction','Joblib model persistence and PDF reports']}
 ];
 
-
-const process = [
-  ['01','DISCOVER','Problem → user → measurable outcome'],
-  ['02','DESIGN','Architecture → data → interfaces'],
-  ['03','BUILD','Python → services → product'],
-  ['04','VERIFY','Tests → evaluation → review'],
-  ['05','SHIP','Docker → CI/CD → cloud'],
-  ['06','OPERATE','Logs → metrics → iteration']
-];
-
-const RESUME_URL = 'Syam_Prakash_AI_ML_Resume.pdf';
-const HERO_VIDEO_URL = 'hero-video.mp4';
+const skills = {
+  'Languages & Core':['Python','JavaScript','SQL','Go','Statistics'],
+  'AI / ML / GenAI':['Scikit-learn','XGBoost','LangGraph','RAG','ChromaDB','Ollama'],
+  'Backend & Web':['FastAPI','Flask','REST APIs','React','Node.js'],
+  'Cloud & Data':['AWS','S3','Glue','Athena','Docker','PostgreSQL','Redis','ClickHouse']
+};
 
 function Arrow(){return <span aria-hidden="true">↗</span>}
 
 export default function Home(){
-  const [active,setActive]=useState(null);
-  const [menu,setMenu]=useState(false);
-  const mainRef=useRef(null);
-  const closeRef=useRef(null);const lastFocus=useRef(null);
-  const menuFirstRef=useRef(null);const menuLastFocus=useRef(null);
+  const [menu,setMenu]=useState(false),[muted,setMuted]=useState(true),[active,setActive]=useState(null);
+  const videoRef=useRef(null);
+  useEffect(()=>{document.body.style.overflow=menu||active?'hidden':'';return()=>{document.body.style.overflow=''}},[menu,active]);
+  const toggleMute=()=>{if(!videoRef.current)return;videoRef.current.muted=!videoRef.current.muted;setMuted(videoRef.current.muted)};
 
-  useEffect(()=>{
-    if(active){
-      lastFocus.current=document.activeElement;
-      closeRef.current&&closeRef.current.focus();
-      return()=>{
-        const el=lastFocus.current;
-        lastFocus.current=null;
-        if(el&&el.isConnected&&el.focus)el.focus();
-      };
-    }
-  },[active]);
-
-  useEffect(()=>{
-    if(menu){
-      menuLastFocus.current=document.activeElement;
-      menuFirstRef.current&&menuFirstRef.current.focus();
-      return()=>{
-        const el=menuLastFocus.current;
-        menuLastFocus.current=null;
-        if(el&&el.isConnected&&el.focus)el.focus();
-      };
-    }
-  },[menu]);
-
-  useEffect(()=>{
-    if(!active&&!menu)return;
-    const previousOverflow=document.body.style.overflow;
-    document.body.style.overflow='hidden';
-    return()=>{document.body.style.overflow=previousOverflow};
-  },[active,menu]);
-
-  useEffect(()=>{
-    const root=mainRef.current;
-    if(!root)return;
-    const move=e=>{
-      root.style.setProperty('--mx',`${e.clientX/window.innerWidth*100}%`);
-      root.style.setProperty('--my',`${e.clientY/window.innerHeight*100}%`);
-    };
-    const scroll=()=>{
-      const maxScroll=document.documentElement.scrollHeight-window.innerHeight;
-      const percentage=maxScroll>0?window.scrollY/maxScroll*100:0;
-      root.style.setProperty('--progress',`${percentage}%`);
-    };
-    const key=e=>{
-      const target=e.target;
-      const typing=target&&(target.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName));
-      if(!typing&&(e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){
-        e.preventDefault();setMenu(v=>!v);
-      }
-      if(e.key==='Escape'){setMenu(false);setActive(null)}
-    };
-    window.addEventListener('pointermove',move,{passive:true});
-    window.addEventListener('scroll',scroll,{passive:true});
-    window.addEventListener('keydown',key);
-    scroll();
-    return()=>{
-      window.removeEventListener('pointermove',move);
-      window.removeEventListener('scroll',scroll);
-      window.removeEventListener('keydown',key);
-    };
-  },[]);
-
-  const trapTab=e=>{if(e.key!=='Tab')return;const f=[...e.currentTarget.querySelectorAll('a[href],button')];if(!f.length)return;const first=f[0],last=f[f.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}};
-  const featured=useMemo(()=>projects.slice(0,3),[]);
-
-  return <main ref={mainRef} id="top" style={{'--mx':'50%','--my':'50%','--progress':'0%'}}>
-    <div className="progress"/><div className="noise"/>
+  return <main className="site">
     <nav className="nav">
-      <a className="brand" href="#top"><span>VSP</span><i>●</i></a>
-      <div className="navlinks"><a href="#work">Work</a><a href="#system">System</a><a href="#stack">Stack</a><a href="#contact">Contact</a></div>
-      <div className="nav-right"><span className="status"><b/> Open to opportunities</span><button className="menu-button" onClick={()=>setMenu(true)} aria-label="Open navigation">⌘ K</button></div>
+      <a href="#top" className="brand">Syam<span className="brand-dot">.</span></a>
+      <div className="navlinks"><a href="#about">About</a><a href="#projects">Work</a><a href="#skills">Skills</a><a href="#contact">Contact</a></div>
+      <div className="nav-right"><span className="availability"><b/> Open to opportunities</span><button className="menu-button" aria-label="Open menu" onClick={()=>setMenu(true)}>☰</button></div>
     </nav>
 
-    {menu&&<div className="command-overlay" role="dialog" aria-modal="true" aria-label="Quick navigation" onClick={()=>setMenu(false)}><div className="command" onKeyDown={trapTab} onClick={e=>e.stopPropagation()}><div className="command-top"><span>QUICK NAVIGATION</span><button onClick={()=>setMenu(false)} aria-label="Close quick navigation">ESC</button></div>{[['#work','Selected work'],['#system','Engineering system'],['#stack','Toolkit & certifications'],['#contact','Contact'],['https://github.com/shyamprakash534','GitHub']].map(([href,label])=><a key={label} ref={label==='Selected work'?menuFirstRef:null} href={href} target={href.startsWith('http')?'_blank':undefined} rel="noreferrer" onClick={()=>setMenu(false)}><span>{label}</span><Arrow/></a>)}</div></div>}
+    {menu&&<div className="modal" onClick={()=>setMenu(false)}><div className="modal-card" onClick={e=>e.stopPropagation()}><button className="modal-close" onClick={()=>setMenu(false)}>×</button><div className="section-kicker">QUICK NAVIGATION</div><div className="contact-links"><a className="contact-link" href="#about" onClick={()=>setMenu(false)}>About <Arrow/></a><a className="contact-link" href="#projects" onClick={()=>setMenu(false)}>Selected work <Arrow/></a><a className="contact-link" href="#skills" onClick={()=>setMenu(false)}>Skills <Arrow/></a><a className="contact-link" href="#contact" onClick={()=>setMenu(false)}>Contact <Arrow/></a><a className="contact-link" href="https://github.com/shyamprakash534" target="_blank" rel="noreferrer">GitHub <Arrow/></a></div></div></div>}
 
-    <section className="hero">
-      <video className="hero-video" autoPlay muted loop playsInline preload="metadata" aria-hidden="true">
-        <source src={HERO_VIDEO_URL} type="video/mp4" />
-      </video>
-      <div className="hero-shade"/>
-      <div className="hero-grid"/><div className="hero-glow"/>
+    <section className="hero" id="top">
+      <video ref={videoRef} className="hero-video" autoPlay muted loop playsInline preload="metadata" aria-label="Syam Prakash portfolio reel"><source src="hero-video.mp4" type="video/mp4"/></video>
+      <div className="hero-video-shade"/>
       <div className="hero-content">
-        <div className="eyebrow"><span className="pulse"/> PYTHON · AI/ML · GENAI · BACKEND · CLOUD <span>/ 2026</span></div>
-        <div className="hero-main">
-          <div className="hero-copy">
-            <p className="overline">SOFTWARE ENGINEER / AI BUILDER</p>
-            <h1>Build smart.<br/><em>Ship real.</em></h1>
-            <p className="hero-lead">I’m <strong>Vemula Syam Prakash</strong> — an MCA graduate with a Statistics foundation, building practical AI products, backend systems and cloud/data workflows.</p>
-            <div className="actions"><a className="button primary" href="#work">Explore work <Arrow/></a>{RESUME_URL&&<a className="button ghost" href={RESUME_URL} download>Resume <span aria-hidden="true">↓</span></a>}<a className="button ghost" href="https://github.com/shyamprakash534" target="_blank" rel="noreferrer">GitHub <Arrow/></a><a className="quiet-link" href="https://www.linkedin.com/in/shyam-prakash-vemula-721029263/" target="_blank" rel="noreferrer">LinkedIn <Arrow/></a></div>
-            <div className="hero-meta"><span>BASED IN INDIA</span><span>06 PROJECTS</span><span>OPEN TO BUILD</span></div>
-          </div>
-          <div className="terminal-wrap">
-            <div className="terminal-glow"/>
-            <div className="terminal">
-              <div className="terminal-bar"><span/><span/><span/><b>vsp / portfolio</b></div>
-              <div className="terminal-body"><p><i>01</i><span>$</span> whoami</p><h3>Vemula Syam Prakash</h3><p><i>02</i><span>$</span> focus --now</p><div className="terminal-tags"><b>PYTHON</b><b>GENAI</b><b>BACKEND</b><b>AWS</b></div><p><i>03</i><span>$</span> status</p><p className="ok">● shipping real systems</p><p><i>04</i><span>$</span> <strong className="cursor">_</strong></p></div>
-            </div>
-          </div>
+        <div className="hero-copy">
+          <div className="hero-kicker">PYTHON · AI/ML · GENAI · CLOUD · DATA</div>
+          <h1>Hi, I’m <span className="dark">Syam Prakash</span><br/>a <span className="dark">Software Developer</span></h1>
+          <p className="hero-lead">I build practical software across Python, AI/ML, backend engineering, cloud and data — turning ideas into working products.</p>
+          <div className="actions"><a className="pill primary" href="#projects">View My Work <Arrow/></a><a className="pill light" href="#contact">Contact Me</a></div>
+          <div className="hero-meta"><span>MCA GRADUATE</span><span>6 FEATURED PROJECTS</span><span>OPEN TO WORK</span></div>
         </div>
       </div>
-      <div className="hero-bottom"><span>SCROLL / EXPLORE</span><div/><span>01—06</span></div>
+      <div className="hero-tools"><button className="mute" onClick={toggleMute} aria-label={muted?'Unmute portfolio reel':'Mute portfolio reel'}>{muted?'🔇':'🔊'}</button><span className="reel-label">{muted?'UNMUTE REEL':'MUTE REEL'}</span></div>
+      <div className="scroll-cue">SCROLL</div>
     </section>
 
-    <section className="statement section">
-      <div className="kicker"><span>01</span> THE BUILDER</div>
-      <div className="statement-grid"><div><h2>Software with<br/><em>intent.</em></h2></div><div><p className="statement-big">I like the space between an idea and a working system.</p><p className="muted">My work crosses AI/ML, GenAI, Python backends, APIs, databases, ETL, cloud infrastructure and deployment. The goal is simple: useful software that can actually run.</p><div className="principles"><span>01 / Evidence over hype</span><span>02 / Practical AI</span><span>03 / Reproducible systems</span><span>04 / Security + maintainability</span></div></div></div>
-    </section>
+    <section className="section about" id="about"><div className="section-kicker">01 / ABOUT ME</div><div className="about-grid"><h2>Building with <em>purpose.</em></h2><div><p className="about-copy">I’m Vemula Syam Prakash, an MCA graduate with a Statistics foundation. I enjoy the space between an idea and a working system — designing APIs, training models, building data workflows and shipping usable applications.</p><p className="about-copy">My focus is practical engineering: clean architecture, evidence over hype, reproducible systems and software that can actually run.</p><div className="principles"><span>01 / Practical AI</span><span>02 / Backend systems</span><span>03 / Cloud & data</span><span>04 / Maintainable code</span></div></div></div></section>
 
-    <section className="work section" id="work">
-      <div className="kicker"><span>02</span> SELECTED WORK / REAL SYSTEMS</div>
-      <div className="section-head"><div><small>06 PRODUCTS · 06 PROBLEMS</small><h2>Built in<br/><em>public.</em></h2></div><p>Repositories you can inspect. Deployments you can open. Systems built around actual problems — not imaginary case studies.</p></div>
-      <div className="featured-grid">{featured.map((p,i)=><article className="featured-card" key={p.name} role="button" tabIndex={0} aria-haspopup="dialog" aria-label={`Open ${p.name} case study`} onClick={()=>setActive(p)} onKeyDown={e=>{if(e.key==='Enter'){e.preventDefault();setActive(p)}else if(e.key===' '){e.preventDefault()}}} onKeyUp={e=>{if(e.key===' '){e.preventDefault();setActive(p)}}}>
-        <div className="card-top"><span>{p.num}</span><small>{p.tag}</small></div><div className={`project-visual v${i}`}><div className="visual-grid"/><div className="visual-ring r1"/><div className="visual-ring r2"/><div className="visual-core">{i===0?'AI':i===1?'API':'RAG'}</div><span className="visual-code">{p.metric}</span></div>
-        <div className="card-body"><div className="card-title"><h3>{p.name}</h3><span>↗</span></div><p>{p.desc}</p><div className="chips">{p.stack.map(x=><span key={x}>{x}</span>)}</div><div className="card-foot"><span>OPEN CASE STUDY</span><Arrow/></div></div>
-      </article>)}</div>
-      <div className="project-list">{projects.slice(3).map(p=><button className="list-project" key={p.name} onClick={()=>setActive(p)}><span>{p.num}</span><strong>{p.name}</strong><small>{p.tag}</small><i>{p.metric}</i><Arrow/></button>)}</div>
-    </section>
+    <section className="section projects" id="projects"><div className="section-kicker">02 / SELECTED WORK</div><div className="project-intro"><h2>Things I’ve <em>built.</em></h2><p>Real projects with repositories and live demos where available. Click any project for a closer look.</p></div><div className="project-grid">{projects.slice(0,3).map((p,i)=><ProjectCard key={p.name} p={p} onOpen={()=>setActive(p)}/>)}</div><div className="more-projects">{projects.slice(3).map(p=><button className="mini-project" key={p.name} onClick={()=>setActive(p)}><strong>{p.name}</strong><small>{p.tag} · {p.metric}</small></button>)}</div></section>
 
-    {active&&<div className="modal-backdrop" onClick={()=>setActive(null)}><article className="project-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" onKeyDown={trapTab} onClick={e=>e.stopPropagation()}><button className="close" ref={closeRef} onClick={()=>setActive(null)} aria-label="Close">×</button><div className="modal-kicker">{active.num} / {active.tag}</div><h2 id="modal-title">{active.name}</h2><p className="modal-desc">{active.detail}</p>{active.evidence&&<ul className="modal-facts">{active.evidence.map(x=><li key={x}>{x}</li>)}</ul>}{active.note&&<p className="modal-note"><b>About the live demo:</b> {active.note}</p>}<div className="modal-stack">{active.stack.map(x=><span key={x}>{x}</span>)}</div><div className="modal-actions"><a className="button primary" href={active.live} target="_blank" rel="noreferrer">Open live <Arrow/></a><a className="button ghost" href={active.repo} target="_blank" rel="noreferrer">Source code <Arrow/></a></div><p className="modal-wake">Hosted on a free tier, so the first visit can take up to a minute to wake.</p></article></div>}
+    <section className="section skills" id="skills"><div className="section-kicker">03 / TOOLKIT</div><h2>My <em>stack.</em></h2><div className="skills-grid">{Object.entries(skills).map(([group,items])=><div className="skill-box" key={group}><h3>{group}</h3><div className="skill-tags">{items.map(x=><span key={x}>{x}</span>)}</div></div>)}</div></section>
 
-    <section className="system section" id="system">
-      <div className="kicker"><span>03</span> ENGINEERING SYSTEM / HOW I SHIP</div>
-      <div className="system-head"><h2>Think.<br/><em>Build.</em><br/>Ship.</h2><p>A repeatable engineering loop: understand the problem, design the system, build the smallest useful version, verify it, deploy it and learn from what happens next.</p></div>
-      <div className="process-grid">{process.map(([n,t,d])=><div className="process" key={n}><span>{n}</span><b>{t}</b><p>{d}</p><i>↘</i></div>)}</div>
-      <div className="system-diagram"><div className="diagram-center"><strong>PRODUCT</strong><small>VALUE / RELIABILITY</small></div>{[['AI','MODEL'],['API','SERVICE'],['DATA','PIPELINE'],['OPS','CLOUD']].map(([a,b],i)=><div className={`diagram-node dn${i}`} key={a}><b>{a}</b><span>{b}</span></div>)}</div>
-    </section>
+    <section className="section contact" id="contact"><div className="contact-grid"><div><div className="section-kicker" style={{color:'rgba(255,255,255,.7)'}}>04 / LET’S CONNECT</div><h2>Let’s build<br/><em>something.</em></h2><p className="contact-copy">I’m open to software development, Python, AI/ML, backend, data and cloud opportunities. If you have a role, project or idea worth discussing, I’d love to hear from you.</p></div><div className="contact-links"><a className="contact-link" href="mailto:shyamprakash534@gmail.com">Email <Arrow/></a><a className="contact-link" href="https://www.linkedin.com/in/shyam-prakash-vemula-721029263/" target="_blank" rel="noreferrer">LinkedIn <Arrow/></a><a className="contact-link" href="https://github.com/shyamprakash534" target="_blank" rel="noreferrer">GitHub <Arrow/></a><a className="contact-link" href="Syam_Prakash_AI_ML_Resume.pdf" download>Download Resume <Arrow/></a></div></div></section>
 
-    <section className="journey section"><div className="kicker"><span>04</span> JOURNEY / FOUNDATION</div><div className="journey-grid"><h2>Statistics<br/>to <em>systems.</em></h2><div className="timeline">{[['2024','BSc Statistics','Acharya Nagarjuna University, Guntur. Quantitative foundation and analytical thinking.'],['2026','MCA','Vignan\'s Lara Institute of Technology and Science, Vadlamudi. Software engineering, cloud and applications.'],['NOW','AI / ML + Python','Building practical products across GenAI, backend and data.']].map(([year,title,desc])=><div className="timeline-item" key={year}><span>{year}</span><div><h3>{title}</h3><p>{desc}</p></div></div>)}</div></div></section>
+    <footer className="footer"><span>© 2026 Vemula Syam Prakash</span><span>Python · AI/ML · Cloud · Data</span></footer>
 
-    <section className="stack section" id="stack"><div className="kicker"><span>05</span> TOOLKIT / TECHNOLOGIES</div><div className="stack-head"><h2>The stack<br/><em>behind it.</em></h2><p>Tools chosen to solve the problem in front of me — from model experiments and retrieval to APIs, data platforms and deployment.</p></div><div className="skill-groups">{[['Languages',['Python','Go','SQL','JavaScript']],['AI / ML',['Scikit-learn','LangGraph','RAG','Ollama','ChromaDB']],['Backend',['FastAPI','Flask','Gin']],['Data',['Pandas','NumPy','PostgreSQL','MySQL','ClickHouse','Redis']],['Cloud / DevOps',['AWS','Docker','Terraform','GitHub Actions','Render']]].map(([g,items])=><div className="skill-group" key={g}><h3>{g}</h3><div className="skill-cloud">{items.map(s=><span key={s}>{s}</span>)}</div></div>)}</div><div className="cert-grid"><div><small>AWS</small><b>Cloud Practitioner</b><span>CLF-C02 · 2026</span></div><div><small>GOOGLE</small><b>AI Professional Certificate</b><span>AUG 2026</span></div><div><small>ORACLE</small><b>Agentic AI Foundations</b><span>2026</span></div></div></section>
-
-    <section className="now section"><div className="now-card"><div className="now-top"><span className="pulse"/> CURRENTLY BUILDING</div><h2>Turning AI ideas into<br/><em>useful software.</em></h2><p>Focused on Python engineering, GenAI/RAG, backend systems and cloud-ready data workflows — with a strong bias toward shipping and learning from real systems.</p><div className="now-tags"><span>PYTHON</span><span>GENAI</span><span>RAG</span><span>BACKEND</span><span>AWS</span></div></div></section>
-
-    <section className="contact section" id="contact"><div className="contact-panel"><div className="kicker"><span>06</span> CONTACT / LET’S BUILD</div><h2>Have a problem<br/>worth <em>building?</em></h2><p>Open to Python, AI/ML, GenAI, backend, cloud and data engineering opportunities.</p><div className="contact-actions">{RESUME_URL&&<a className="button ghost" href={RESUME_URL} target="_blank" rel="noreferrer">Resume <Arrow/></a>}<a className="button primary" href="mailto:shyamprakash271@gmail.com">shyamprakash271@gmail.com <Arrow/></a><a className="quiet-link" href="https://www.linkedin.com/in/shyam-prakash-vemula-721029263/" target="_blank" rel="noreferrer">LinkedIn <Arrow/></a></div></div></section>
-
-    <footer><span>VSP © 2026</span><span>BUILT WITH PYTHON, AI & CURIOSITY</span><a href="#top">BACK TO TOP ↑</a></footer>
-  </main>;
+    {active&&<div className="modal" onClick={()=>setActive(null)}><article className="modal-card" onClick={e=>e.stopPropagation()}><button className="modal-close" onClick={()=>setActive(null)}>×</button><div className="section-kicker">{active.num} / {active.tag}</div><h3>{active.name}</h3><p>{active.detail}</p><ul className="evidence">{active.evidence.map(x=><li key={x}>{x}</li>)}</ul><div className="chips">{active.stack.map(x=><span className="chip" key={x}>{x}</span>)}</div><div className="modal-actions"><a className="pill primary" href={active.live} target="_blank" rel="noreferrer">Live Demo <Arrow/></a><a className="pill light" href={active.repo} target="_blank" rel="noreferrer">GitHub <Arrow/></a></div></article></div>}
+  </main>
 }
+
+function ProjectCard({p,onOpen}){return <article className="project-card" onClick={onOpen} role="button" tabIndex={0} onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')onOpen()}}><div className="project-art"><span className="number">{p.num}</span><div className="orb"/><span className="label">{p.metric}</span></div><div className="project-body"><div className="project-top"><h3>{p.name}</h3><span>↗</span></div><p>{p.desc}</p><div className="chips">{p.stack.map(x=><span className="chip" key={x}>{x}</span>)}</div><div className="project-links"><span>VIEW CASE STUDY</span><Arrow/></div></div></article>}
