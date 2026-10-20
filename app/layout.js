@@ -29,5 +29,5 @@ export const viewport = { width: 'device-width', initialScale: 1, viewportFit: '
 const jsonLd = { '@context': 'https://schema.org', '@type': 'Person', name: 'Vemula Syam Prakash', jobTitle: 'Software Developer', url: 'https://syam-prakash-portfolio-live.vercel.app/', sameAs: ['https://github.com/shyamprakash534', 'https://www.linkedin.com/in/shyam-prakash-vemula-721029263'] };
 
 export default function RootLayout({ children }) {
-  return <html lang="en"><body>{children}<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} /></body></html>;
+  return <html lang="en"><body>{children}<script dangerouslySetInnerHTML={{ __html: `(() => { const start = () => { const video = document.querySelector('.hero-video'); if (!video) return; video.muted = true; video.defaultMuted = true; const play = () => { if (video.paused) video.play().catch(() => {}); }; play(); video.addEventListener('loadedmetadata', play, { once: true }); video.addEventListener('canplay', play, { once: true }); }; if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true }); else start(); })();` }} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} /></body></html>;
 }
