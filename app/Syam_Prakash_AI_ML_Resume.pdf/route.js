@@ -1,6 +1,6 @@
 const lines = [
   'VEMULA SYAM PRAKASH',
-  'Guntur, Andhra Pradesh | +91 6305989456 | shyamprakash271@gmail.com',
+  'Guntur, Andhra Pradesh | +91 6305989456 | shyamprakash534@gmail.com',
   'LinkedIn: linkedin.com/in/shyam-prakash-vemula-721029263 | GitHub: github.com/shyamprakash534',
   '',
   'SUMMARY',
@@ -49,7 +49,6 @@ const lines = [
   '',
   'CERTIFICATIONS',
   'Google AI Professional Certificate — Google/Coursera | Aug 2026',
-  'Oracle Certified Foundations Associate – Agentic AI | 2026',
   'AWS Cloud Practitioner (CLF-C02) — AWS | 2026'
 ];
 
