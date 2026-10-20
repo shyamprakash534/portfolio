@@ -1,0 +1,41 @@
+/* Oracle certification card added from the user's 2026 credential badge. */
+.credential-track:after{
+  content:'Oracle Certified Foundations Associate — Agentic AI  •  2026';
+  position:relative;
+  display:flex;
+  align-items:center;
+  min-height:185px;
+  border:1px solid #303037;
+  border-radius:24px;
+  background:
+    url('/certifications/oracle-agentic-ai.svg') 24px center / 135px 135px no-repeat,
+    linear-gradient(145deg,#18181d,#111114);
+  padding:26px 28px 26px 180px;
+  color:#fff;
+  font-family:Manrope,sans-serif;
+  font-size:20px;
+  line-height:1.2;
+  font-weight:800;
+  letter-spacing:-.035em;
+  box-shadow:0 20px 50px rgba(0,0,0,.12);
+}
+@media (max-width:900px){
+  .credential-track:after{
+    flex:0 0 86%;
+    min-height:165px;
+    padding:22px 18px 22px 125px;
+    background-size:95px 95px;
+    background-position:16px center;
+    border-radius:21px;
+    font-size:17px;
+    scroll-snap-align:start;
+  }
+}
+@media (max-width:560px){
+  .credential-track:after{
+    flex-basis:86%;
+    padding-left:116px;
+    font-size:15px;
+    background-size:88px 88px;
+  }
+}
