@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520" role="img" aria-labelledby="title desc">
+  <title id="title">Oracle Certified Foundations Associate — Agentic AI</title>
+  <desc id="desc">Oracle Certified Foundations Associate badge for Agentic AI, 2026.</desc>
+  <defs>
+    <radialGradient id="silver" cx="50%" cy="35%"><stop offset="0" stop-color="#fafafa"/><stop offset=".45" stop-color="#c8c8c8"/><stop offset=".78" stop-color="#8e8e8e"/><stop offset="1" stop-color="#4c4c4c"/></radialGradient>
+    <linearGradient id="bronze" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7d3b18"/><stop offset=".45" stop-color="#c57b4b"/><stop offset="1" stop-color="#6b2d11"/></linearGradient>
+    <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7d3b18"/><stop offset=".5" stop-color="#bd7040"/><stop offset="1" stop-color="#713215"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-opacity=".35"/></filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M150 342 L150 493 L207 456 L260 493 L260 342 Z" fill="url(#ribbon)"/>
+    <path d="M260 342 L260 493 L313 456 L370 493 L370 342 Z" fill="#5d5d5d" opacity=".95"/>
+    <path d="M235 344 L235 502 L260 486 L285 502 L285 344 Z" fill="#f7f5f1" stroke="#aaa" stroke-width="2"/>
+    <circle cx="260" cy="210" r="193" fill="url(#silver)" stroke="#303030" stroke-width="7"/>
+    <circle cx="260" cy="210" r="169" fill="#f6f4f0" stroke="#444" stroke-width="3"/>
+    <circle cx="260" cy="210" r="151" fill="none" stroke="url(#bronze)" stroke-width="25"/>
+    <circle cx="260" cy="210" r="127" fill="#faf9f5" stroke="#ddd" stroke-width="2"/>
+    <text x="260" y="143" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="700" fill="#c7462d">ORACLE</text>
+    <text x="260" y="169" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#555">Certified</text>
+    <text x="260" y="217" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#111">Foundations</text>
+    <text x="260" y="246" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700" fill="#111">Associate</text>
+    <text x="260" y="275" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#333">Agentic AI</text>
+    <text x="260" y="306" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#777">2026</text>
+    <text x="260" y="409" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" fill="#555">AI</text>
+  </g>
+</svg>
