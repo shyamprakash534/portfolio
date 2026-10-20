@@ -7,7 +7,6 @@ html{scroll-behavior:smooth}
   --ease-spring:cubic-bezier(.2,.8,.2,1);
 }
 
-/* Keep navigation movement fluid without feeling floaty. */
 .nav{transition:background-color .55s var(--ease-smooth),border-color .55s var(--ease-smooth),transform .55s var(--ease-smooth)}
 .navlinks a{position:relative;transition:color .45s var(--ease-smooth),opacity .45s var(--ease-smooth),transform .45s var(--ease-smooth)}
 .navlinks a:after{content:'';position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:#ff536c;transition:right .55s var(--ease-smooth)}
@@ -15,19 +14,17 @@ html{scroll-behavior:smooth}
 .brand{transition:transform .6s var(--ease-smooth),letter-spacing .6s var(--ease-smooth)}
 .brand:hover{transform:translateX(2px);letter-spacing:-.015em}
 
-/* Softer hero entrance: video, copy and controls arrive in separate layers. */
+/* Fade/filter the reel in without replacing the hero's intentional object scale. */
 .hero-video{animation:heroVideoCinematic 1.8s var(--ease-smooth) both!important}
 .hero-video-shade{transition:opacity 1.4s var(--ease-smooth),background .9s var(--ease-smooth)}
 .hero-copy{animation:heroCopyCinematic 1.25s var(--ease-smooth) .08s both}
 .hero-tools{animation:heroToolsCinematic 1s var(--ease-smooth) .5s both}
 .scroll-cue{animation:scrollCueIn 1s var(--ease-smooth) .8s both,scrollCueFloat 3.2s ease-in-out 2s infinite}
 
-/* Make buttons feel physically responsive rather than snapping. */
 .pill,.menu-button,.mute{transition:transform .6s var(--ease-smooth),background-color .5s var(--ease-smooth),border-color .5s var(--ease-smooth),box-shadow .6s var(--ease-smooth),color .45s var(--ease-smooth)}
 .pill:hover{transform:translateY(-2px)}
 .pill:active{transform:translateY(1px) scale(.975)}
 
-/* Section reveals become longer and more layered. */
 .reveal-on-scroll .section-kicker,
 .reveal-on-scroll .about-intro,
 .reveal-on-scroll .expertise-head,
@@ -44,7 +41,6 @@ html{scroll-behavior:smooth}
 .reveal-on-scroll.is-visible .cert-heading,
 .reveal-on-scroll.is-visible .contact-grid{animation:contentFloatIn 1.05s var(--ease-smooth) .08s both!important}
 
-/* Stagger cards with a gentle cascade. */
 .reveal-on-scroll.is-visible .expertise-card,
 .reveal-on-scroll.is-visible .skill-box,
 .reveal-on-scroll.is-visible .project-card,
@@ -56,29 +52,24 @@ html{scroll-behavior:smooth}
 .reveal-on-scroll.is-visible .project-card:nth-child(5){animation:smoothCardIn .95s var(--ease-smooth) .52s both!important}
 .reveal-on-scroll.is-visible .project-card:nth-child(6){animation:smoothCardIn .95s var(--ease-smooth) .61s both!important}
 
-/* Project filtering: cards settle instead of popping into place. */
 .project-card{transition:transform .7s var(--ease-smooth),opacity .5s var(--ease-smooth),filter .5s var(--ease-smooth),border-color .55s var(--ease-smooth),box-shadow .7s var(--ease-smooth)}
 .project-filters button{transition:transform .5s var(--ease-smooth),background-color .5s var(--ease-smooth),border-color .5s var(--ease-smooth),color .45s var(--ease-smooth)}
 .project-filters button:active{transform:scale(.96)}
 .project-count b{display:inline-block;transition:transform .5s var(--ease-smooth),opacity .35s ease}
 
-/* Cards feel like surfaces with a slow lift, not a sharp hover jump. */
 .expertise-card,.skill-box,.credential-card{transition:transform .7s var(--ease-smooth),box-shadow .7s var(--ease-smooth),border-color .6s var(--ease-smooth),background-color .6s var(--ease-smooth)}
 .expertise-card:hover,.skill-box:hover,.credential-card:hover{transition-duration:.75s}
 .visual-ui{transition:transform .8s var(--ease-smooth),filter .8s var(--ease-smooth)}
 .project-card:hover .visual-ui{transform:translate3d(0,-5px,0) scale(1.018)}
 
-/* Modal opening has a soft depth shift. */
 .modal{animation:backdropIn .55s ease both}
 .modal-card{animation:modalDepthIn .72s var(--ease-smooth) both!important}
 .menu-card{animation:menuDepthIn .8s var(--ease-smooth) both!important}
 .modal-close{transition:transform .55s var(--ease-smooth),background-color .45s var(--ease-smooth),opacity .35s ease}
 
-/* Contact links glide rather than jump. */
 .contact-link{transition:transform .65s var(--ease-smooth),color .45s var(--ease-smooth),opacity .4s ease}
 .contact-link:hover{transform:translateX(10px)}
 
-/* Respect users who prefer less movement. */
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .scroll-cue{animation:none!important}
@@ -96,7 +87,7 @@ html{scroll-behavior:smooth}
   .reveal-on-scroll.is-visible .credential-card{animation:none!important;transition:none!important}
 }
 
-@keyframes heroVideoCinematic{from{opacity:.35;transform:scale(1.035);filter:blur(14px) saturate(.8)}to{opacity:1;transform:scale(1);filter:blur(0) saturate(1.05)}}
+@keyframes heroVideoCinematic{from{opacity:.35;filter:blur(14px) saturate(.8)}to{opacity:1;filter:blur(0) saturate(1.05)}}
 @keyframes heroCopyCinematic{from{opacity:0;transform:translate3d(0,34px,0);filter:blur(8px)}to{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}}
 @keyframes heroToolsCinematic{from{opacity:0;transform:translate3d(0,16px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 @keyframes scrollCueIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
