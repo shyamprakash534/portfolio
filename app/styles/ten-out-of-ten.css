@@ -1,0 +1,69 @@
+/* 10/10 portfolio polish: credibility, hierarchy, tactile UX and responsive refinement. */
+
+/* Certification system is intentionally visual-first; factual links remain separate until exact credentials are available. */
+.credential-card{position:relative;isolation:isolate}
+.credential-card:after{content:'';position:absolute;inset:auto 28px 0;height:1px;background:linear-gradient(90deg,rgba(244,36,62,.65),transparent 70%);opacity:.45;transform:scaleX(.35);transform-origin:left;transition:transform .6s var(--ui-ease),opacity .4s ease}
+.credential-card:hover:after{transform:scaleX(1);opacity:1}
+.credential-detail{min-width:0}
+.credential-detail h3{overflow-wrap:anywhere}
+
+/* Recruiter signal rail under the hero copy. */
+.hero-copy:after{content:'MCA GRADUATE  ·  6 PROJECTS  ·  PYTHON  ·  AI/ML  ·  AWS';display:block;margin-top:26px;color:rgba(255,255,255,.64);font:800 9px/1.4 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase}
+
+/* Stronger section rhythm without adding noisy animation. */
+.section{position:relative}
+.section:not(.hero):before{content:'';position:absolute;left:0;top:0;width:64px;height:1px;background:linear-gradient(90deg,#f4243e,transparent);opacity:.55}
+.expertise-grid,.skills-grid,.project-grid,.credential-track{position:relative}
+
+/* Expertise cards read more like engineering capabilities. */
+.expertise-card{position:relative}
+.expertise-card .expertise-card-top span:first-child{font-variant-numeric:tabular-nums}
+.expertise-card h3{max-width:12ch}
+.expertise-card .expertise-stack{transition:color .35s ease}
+.expertise-card:hover .expertise-stack{color:#fff}
+
+/* Skills get a clearer technical-system feel. */
+.skill-box{position:relative}
+.skill-box .skill-index{font-variant-numeric:tabular-nums}
+.skill-tags span{transition:transform .28s var(--ui-ease),border-color .28s ease,background .28s ease}
+.skill-tags span:hover{transform:translateY(-2px);border-color:rgba(244,36,62,.55)}
+
+/* Project cards: make the CTA visually unavoidable without being loud. */
+.project-card{position:relative}
+.project-card:focus-visible{outline:2px solid #fff;outline-offset:5px}
+.project-links{transition:letter-spacing .4s var(--ui-ease),color .3s ease}
+.project-card:hover .project-links{letter-spacing:.08em;color:#ff6078}
+.project-card:hover .project-arrow{transform:translate(4px,-4px)}
+.project-arrow{transition:transform .4s var(--ui-ease)}
+
+/* Project filters stay usable while scrolling long work lists. */
+.project-filters{scrollbar-width:none}
+.project-filters::-webkit-scrollbar{display:none}
+.project-filters button{transition:transform .3s var(--ui-ease),background .3s ease,border-color .3s ease,color .3s ease}
+.project-filters button:hover{transform:translateY(-1px)}
+
+/* Modal feels like a case-study surface rather than a generic dialog. */
+.project-modal .project-modal-card{max-width:860px;border:1px solid rgba(255,255,255,.12);background:radial-gradient(circle at 90% 0,rgba(244,36,62,.08),transparent 34%),linear-gradient(145deg,#18181d,#0d0d10)}
+.project-modal .evidence li::marker{color:#f4243e}
+.project-modal .chips{margin-top:22px}
+
+/* Contact conversion gets a quiet visual endpoint. */
+.contact-grid{position:relative}
+.contact-links .contact-link{min-height:52px}
+
+/* Mobile: keep the signal rail compact and protect readability. */
+@media(max-width:700px){
+  .hero-copy:after{margin-top:20px;font-size:8px;line-height:1.7;letter-spacing:.12em;max-width:32ch}
+  .section:not(.hero):before{width:42px}
+  .expertise-card h3{max-width:none}
+  .credential-card:after{left:18px;right:18px}
+}
+
+@media(max-width:430px){
+  .hero-copy:after{max-width:27ch}
+  .project-links{font-size:10px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .credential-card:after,.skill-tags span,.project-links,.project-arrow{transition:none}
+}
