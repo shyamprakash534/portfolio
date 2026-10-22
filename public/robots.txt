@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://syam-prakash-portfolio-live.vercel.app/sitemap.xml
