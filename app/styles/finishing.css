@@ -1,0 +1,88 @@
+/* Final UI refinement — subtle depth, smoother interaction, stronger accessibility and mobile polish. */
+:root{--ui-red:#f4243e;--ui-red-soft:#ff5a70;--ui-ink:#0b0b0e;--ui-line:rgba(255,255,255,.1);--ui-ease:cubic-bezier(.16,1,.3,1)}
+html{scroll-behavior:smooth;scroll-padding-top:72px;background:#0b0b0e}
+body{overflow-x:hidden;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(244,36,62,.92);color:#fff}
+::-webkit-scrollbar{width:9px}
+::-webkit-scrollbar-track{background:#0b0b0e}
+::-webkit-scrollbar-thumb{background:linear-gradient(#3a3a42,#f4243e);border-radius:999px;border:2px solid #0b0b0e}
+::-webkit-scrollbar-thumb:hover{background:#ff3d57}
+
+/* Quiet ambient depth without adding visual noise. */
+section{isolation:isolate}
+.section-kicker{transition:letter-spacing .6s var(--ui-ease),color .35s ease}
+.reveal-on-scroll.is-visible .section-kicker{letter-spacing:.28em;color:#ff6078}
+
+/* Navigation and controls feel more tactile. */
+nav,.nav-bar,.site-nav,.header-nav{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.menu-button,.mute,.modal-close{will-change:transform;backface-visibility:hidden}
+.pill,.project-filters button{box-shadow:inset 0 0 0 1px rgba(255,255,255,.015)}
+.pill:hover{box-shadow:0 12px 34px rgba(0,0,0,.18),inset 0 0 0 1px rgba(255,255,255,.08)}
+.pill:focus-visible,.menu-button:focus-visible,.mute:focus-visible,.project-filters button:focus-visible,.modal-close:focus-visible,.contact-link:focus-visible{outline:2px solid #fff;outline-offset:4px}
+
+/* Hero: cleaner cinematic layering. */
+.hero{overflow:hidden}
+.hero:before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 68% 48%,rgba(255,255,255,.09),transparent 42%),linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.13));mix-blend-mode:screen}
+.hero-content,.hero-tools,.hero .scroll-cue{z-index:4}
+.hero-copy{transform:translateZ(0)}
+.hero h1{transition:letter-spacing .8s var(--ui-ease),transform .8s var(--ui-ease)}
+.hero:hover h1{letter-spacing:-.09em}
+.hero-video{transform:scale(1.015);transition:transform 1.8s var(--ui-ease),filter 1.2s ease,opacity 1s ease}
+.hero:hover .hero-video{transform:scale(1.025)}
+.hero-video-shade{z-index:2}
+
+/* Cards: depth is driven by borders/highlights rather than aggressive motion. */
+.expertise-card,.skill-box,.credential-card,.project-card{overflow:hidden;backface-visibility:hidden;transform:translateZ(0)}
+.expertise-card:before,.skill-box:before,.credential-card:before,.project-card:before{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.045),transparent 30%,transparent 70%,rgba(255,23,59,.035));opacity:0;transition:opacity .55s ease}
+.expertise-card:hover:before,.skill-box:hover:before,.credential-card:hover:before,.project-card:hover:before{opacity:1}
+.project-card{transition:transform .55s var(--ui-ease),border-color .45s ease,box-shadow .55s var(--ui-ease),background .45s ease}
+.project-art{transition:transform .7s var(--ui-ease),filter .55s ease}
+.project-card:hover .project-art{filter:saturate(1.08) contrast(1.02)}
+.project-card .project-body{transition:transform .55s var(--ui-ease)}
+.project-card:hover .project-body{transform:translateY(-2px)}
+
+/* Chips and small labels get a more premium hover response. */
+.chip{transition:transform .3s var(--ui-ease),border-color .3s ease,background .3s ease,color .3s ease}
+.chip:hover{transform:translateY(-2px);border-color:rgba(255,91,115,.55)!important;background:rgba(244,36,62,.08)!important;color:#fff}
+
+/* Modal polish. */
+.modal-backdrop{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.modal-card{box-shadow:0 40px 120px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.04)}
+.modal-card a{transition:color .25s ease,transform .35s var(--ui-ease)}
+.modal-card a:hover{transform:translateX(3px);color:#ff6078}
+
+/* Contact links feel like a deliberate list rather than plain anchors. */
+.contact-link{position:relative;overflow:hidden}
+.contact-link:after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:linear-gradient(90deg,#f4243e,transparent);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ui-ease)}
+.contact-link:hover:after{transform:scaleX(1)}
+
+/* Mobile: preserve hierarchy and avoid hover-only effects becoming sticky. */
+@media(max-width:700px){
+  html{scroll-padding-top:58px}
+  .hero:after{right:16px;top:92px;font-size:7px}
+  .hero h1{letter-spacing:-.08em}
+  .hero:hover h1{letter-spacing:-.08em}
+  .hero-video,.hero:hover .hero-video{transform:scale(1.02)}
+  .project-grid{grid-template-columns:1fr;gap:14px}
+  .project-card:nth-child(1){grid-column:auto;display:flex;min-height:0}
+  .project-card:nth-child(1) .project-art{height:220px;min-height:220px}
+  .project-card:nth-child(1) .project-body{padding:25px}
+  .project-controls{align-items:flex-start;flex-direction:column}
+  .project-filters{width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px;scrollbar-width:none}
+  .project-filters::-webkit-scrollbar{display:none}
+  .project-filters button{flex:0 0 auto}
+  .project-count{align-self:flex-end}
+  .modal-card{border-radius:22px!important}
+}
+
+@media(max-width:430px){
+  .hero-content{padding-bottom:18vh}
+  .hero .actions{flex-wrap:wrap}
+  .project-body{padding:21px 20px 19px}
+  .project-body>p{line-height:1.62}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .hero:hover h1,.hero:hover .hero-video,.project-card:hover .project-body{transform:none;letter-spacing:inherit}
+}
