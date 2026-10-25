@@ -1,0 +1,58 @@
+/* Surgical motion polish — preserve the existing visual system, only soften transitions and interaction timing. */
+
+:root{
+  --motion-fast:220ms;
+  --motion-base:420ms;
+  --motion-slow:700ms;
+  --motion-ease:cubic-bezier(.22,1,.36,1);
+  --motion-soft:cubic-bezier(.16,1,.3,1);
+}
+
+/* Keep anchored navigation from landing underneath the fixed header. */
+[id]{scroll-margin-top:88px}
+
+/* Reduce compositor work while preserving the existing look. */
+.hero-video,.visual-ui{backface-visibility:hidden;transform:translateZ(0)}
+
+/* More natural controls: quick response, soft settle. */
+.navlinks a,.brand,.menu-button,.pill,.mute,.project-filters button,.modal-close,.contact-link{
+  -webkit-tap-highlight-color:transparent;
+  transition-timing-function:var(--motion-ease);
+}
+
+.navlinks a:after{transition-duration:var(--motion-base)}
+.pill:hover{transform:translate3d(0,-2px,0)}
+.pill:active{transform:translate3d(0,1px,0) scale(.98)}
+.menu-button:hover,.mute:hover{transform:translate3d(0,-1px,0)}
+
+/* Cards should feel responsive without the floaty effect becoming excessive. */
+.expertise-card,.skill-box,.credential-card,.project-card{
+  transform:translateZ(0);
+  backface-visibility:hidden;
+}
+.expertise-card:hover,.skill-box:hover,.credential-card:hover{
+  transform:translate3d(0,-4px,0);
+}
+.project-card:hover{transform:translate3d(0,-5px,0)}
+
+/* Filter changes get a small entrance instead of a hard visual swap. */
+.project-grid > .project-card{animation:filterCardIn .5s var(--motion-soft) both}
+@keyframes filterCardIn{
+  from{opacity:.35;transform:translate3d(0,10px,0)}
+  to{opacity:1;transform:translate3d(0,0,0)}
+}
+
+/* Keep modal motion smooth and restrained. */
+.modal{will-change:opacity}
+.modal-card{will-change:transform,opacity}
+.modal-close:hover{transform:rotate(4deg) scale(1.04)}
+
+/* Make in-page navigation feel deliberate rather than instantaneous. */
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;scroll-padding-top:0}
+  .project-grid > .project-card{animation:none}
+  .expertise-card:hover,.skill-box:hover,.credential-card:hover,.project-card:hover,
+  .pill:hover,.pill:active,.menu-button:hover,.mute:hover,.modal-close:hover{transform:none}
+}
