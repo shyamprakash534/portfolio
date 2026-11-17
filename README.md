@@ -32,7 +32,7 @@ The hero video is stored at `public/hero-video.mp4`. The downloadable resume is 
 - MCA and B.Sc. education are presented as accessible HTML, not CSS-generated text.
 - Three flagship projects are marked as featured; implementation notes appear in keyboard-accessible case study dialogs.
 - Project illustrations are explicitly labeled as illustrative (not measured performance results).
-- Background hero video is loaded only on larger screens when reduced-motion and data-saver preferences permit; the gradient hero remains usable without it.
+- Background hero video plays on mobile and desktop when reduced-motion and data-saver preferences permit; the gradient hero remains usable without it.
 - The current AI/ML resume link remains at `/Syam_Prakash_AI_ML_Resume.pdf`. Update the underlying PDF when a new resume is approved.
 - Responsive header now exposes direct project, education, contact, and resume links on larger screens.
 
