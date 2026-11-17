@@ -76,8 +76,13 @@
  .hero-proof{margin-top:26px;gap:13px 0}
  .hero-proof span{padding:0 10px;font-size:9px;gap:5px}
  .hero-proof b{font-size:16px}
- .hero-video,.hero-tools{display:none}
- .hero-video-shade{background:linear-gradient(90deg,rgba(149,13,46,.18),transparent)}
+ .hero-video{display:block;position:absolute;z-index:0;left:0;right:0;top:0;bottom:0;width:100%;height:100%;object-fit:cover;object-position:66% center;opacity:.8;filter:saturate(1.04) contrast(1.05)}
+ .hero-tools{display:flex;left:24px;bottom:27px;gap:5px;flex-direction:row;align-items:center}
+ .hero-tools .mute{width:39px;height:39px;font-size:16px}
+ .hero-tools .reel-label{font-size:8px}
+ .hero .scroll-cue{bottom:25px}
+ 
+ .hero-video-shade{z-index:2;background:linear-gradient(90deg,rgba(119,12,43,.96) 0%,rgba(129,13,44,.87) 39%,rgba(145,12,51,.5) 70%,rgba(167,18,50,.18) 100%),linear-gradient(0deg,rgba(23,6,12,.53) 0%,rgba(23,6,12,0) 34%,rgba(20,2,7,.14) 100%)}
  .hero .scroll-cue{bottom:27px}
  .project-visual-note{margin:-8px 0 21px}
  .education-grid{grid-template-columns:1fr;gap:14px}
@@ -96,3 +101,12 @@
  .education-card h3{font-size:29px}
 }
 @media(prefers-reduced-motion:reduce){.hero-video{display:none!important}.hero-contact,.nav-resume{transition:none}}
+
+/* Keep the reel visible in the mobile hero while preserving text contrast. */
+.hero-video{z-index:0}
+@media(max-width:700px){
+ .hero .hero-video{display:block;z-index:0}
+ .hero .hero-video-shade{z-index:2}
+ .hero .hero-content,.hero .hero-tools,.hero .scroll-cue{z-index:4}
+}
+@media(prefers-reduced-motion:reduce){.hero .hero-video{display:none!important}.hero .hero-tools{display:none!important}}
