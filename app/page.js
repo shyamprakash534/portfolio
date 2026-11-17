@@ -41,12 +41,10 @@ export default function Home(){
   useEffect(()=>{document.body.style.overflow=menu||active?'hidden':'';return()=>{document.body.style.overflow=''};},[menu,active]);
   useEffect(()=>{
     const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
-    const smallScreen=window.matchMedia('(max-width: 700px)');
-    const updateVideo=()=>setEnableVideo(!reduceMotion.matches&&!smallScreen.matches&&!navigator.connection?.saveData);
+    const updateVideo=()=>setEnableVideo(!reduceMotion.matches&&!navigator.connection?.saveData);
     updateVideo();
     reduceMotion.addEventListener?.('change',updateVideo);
-    smallScreen.addEventListener?.('change',updateVideo);
-    return()=>{reduceMotion.removeEventListener?.('change',updateVideo);smallScreen.removeEventListener?.('change',updateVideo);};
+    return()=>reduceMotion.removeEventListener?.('change',updateVideo);
   },[]);
   useEffect(()=>{const video=videoRef.current;if(!video)return;if(enableVideo){video.load();video.play().catch(()=>{});}else video.pause();},[enableVideo]);
   useEffect(()=>{const closeOnEscape=event=>{if(event.key==='Escape'){setMenu(false);setActive(null);}};window.addEventListener('keydown',closeOnEscape);return()=>window.removeEventListener('keydown',closeOnEscape);},[]);
@@ -83,7 +81,7 @@ export default function Home(){
   </nav>
     {menu&&<div id="site-menu" className="modal menu-modal" role="dialog" aria-modal="true" aria-label="Site navigation" onClick={()=>setMenu(false)}><div className="modal-card menu-card" onClick={e=>e.stopPropagation()}><div className="menu-card-head"><a href="#top" className="brand" onClick={()=>setMenu(false)}>Syam Prakash<span className="brand-dot">.</span></a><button className="modal-close" onClick={()=>setMenu(false)} aria-label="Close menu">×</button></div><div className="section-kicker">NAVIGATE</div><div className="contact-links"><a className="contact-link" href="#top" onClick={()=>setMenu(false)}>Overview <Arrow/></a><a className="contact-link" href="#expertise" onClick={()=>setMenu(false)}>Expertise <Arrow/></a><a className="contact-link" href="#skills" onClick={()=>setMenu(false)}>Skills <Arrow/></a><a className="contact-link" href="#projects" onClick={()=>setMenu(false)}>Selected work <Arrow/></a><a className="contact-link" href="#education" onClick={()=>setMenu(false)}>Education <Arrow/></a><a className="contact-link" href="#certifications" onClick={()=>setMenu(false)}>Certifications <Arrow/></a><a className="contact-link" href="/Syam_Prakash_AI_ML_Resume.pdf">AI/ML résumé (PDF) <Arrow/></a><a className="contact-link" href="#contact" onClick={()=>setMenu(false)}>Contact <Arrow/></a></div><a className="pill menu-hire" href="mailto:shyamprakash534@gmail.com" onClick={()=>setMenu(false)}>Let’s connect <Arrow/></a></div></div>}
     <section className="hero" id="top">
-      <video ref={videoRef} className="hero-video" autoPlay muted loop playsInline preload="none" src={enableVideo?'/hero-video.mp4?v=20261020':undefined} aria-hidden="true"/>
+      <video ref={videoRef} className="hero-video" autoPlay muted loop playsInline preload="metadata" src={enableVideo?'/hero-video.mp4?v=20261020':undefined} aria-hidden="true"/>
       <div className="hero-video-shade"/>
       <div className="hero-content"><div className="hero-copy">
         <p className="hero-eyebrow"><span className="hero-status-dot"/> MCA GRADUATE · 2026 <span className="eyebrow-separator">/</span> SOFTWARE DEVELOPER</p>
