@@ -78,7 +78,7 @@ em{font-style:normal}
 
 /* Expertise: phone-like dark cards on a vertical dotted rail. */
 .expertise{background:var(--ink);padding-top:120px}
-.expertise-head{display:flex;justify-content:space-between;gap:8vw;align-items:end}
+.expertise-head{display:flex;justify-content:space-between;gap:8vw;align-items:flex-end}
 .expertise-head h2{max-width:780px}
 .expertise-head h2 em{color:var(--red)}
 .expertise-grid{position:relative;display:flex;flex-direction:column;align-items:center;gap:34px;padding:70px 0 20px;margin-top:10px}
@@ -97,7 +97,7 @@ em{font-style:normal}
 
 /* Toolkit: restrained monochrome cards, red index details. */
 .skills{background:#101013;padding-top:105px;padding-bottom:120px;border-top:1px solid #1e1e22}
-.skills-head{display:flex;justify-content:space-between;align-items:end;gap:8vw}
+.skills-head{display:flex;justify-content:space-between;align-items:flex-end;gap:8vw}
 .skills-head h2 em{color:var(--red)}
 .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:56px}
 .skill-box{position:relative;background:#151519;border:1px solid #2a2a30;border-radius:23px;padding:30px;min-height:175px;overflow:hidden;transition:border-color .25s,transform .25s}
@@ -110,7 +110,7 @@ em{font-style:normal}
 /* Work gallery: six full case-study cards, never hide the final three on mobile. */
 .projects{background:#08080a;padding-top:115px;padding-bottom:125px;border-top:1px solid #1d1d21}
 .projects .section-kicker,.expertise .section-kicker,.skills .section-kicker,.certifications .section-kicker{color:#8f8f99}
-.project-intro{display:flex;justify-content:space-between;align-items:end;gap:6vw;margin-bottom:55px}
+.project-intro{display:flex;justify-content:space-between;align-items:flex-end;gap:6vw;margin-bottom:55px}
 .project-intro h2 em{color:var(--red)}
 .project-intro p{max-width:420px;color:#a6a6af;font-size:14px;line-height:1.65;margin:0 0 4px}
 .project-grid{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:18px}
@@ -124,7 +124,7 @@ em{font-style:normal}
 .project-art .orb:after{content:'';position:absolute;inset:23px;border:1px dashed rgba(255,255,255,.4);border-radius:50%}
 .project-art .label{position:absolute;right:16px;bottom:14px;font-size:8px;letter-spacing:.1em;color:#b6b6c0;text-align:right}
 .project-body{padding:23px 23px 22px}
-.project-top{display:flex;justify-content:space-between;align-items:start;gap:12px}
+.project-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .project-top h3{font-family:Manrope,sans-serif;font-size:22px;letter-spacing:-.05em;line-height:1.08;margin:0}
 .project-top span{font-size:20px;color:#ff536c;transition:transform .25s}
 .project-card:hover .project-top span{transform:translate(3px,-3px)}
@@ -136,7 +136,7 @@ em{font-style:normal}
 
 /* Credentials are horizontal cards, like a compact credential carousel. */
 .certifications{background:#101013;border-top:1px solid #202025;padding-top:110px;padding-bottom:120px}
-.cert-heading{display:flex;justify-content:space-between;align-items:end;gap:7vw;margin-bottom:50px}
+.cert-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:7vw;margin-bottom:50px}
 .cert-heading h2 em{color:var(--red)}
 .credential-track{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
 .credential-card{position:relative;display:flex;align-items:center;gap:20px;min-height:185px;border:1px solid #303037;border-radius:24px;background:linear-gradient(145deg,#18181d,#111114);padding:26px 28px;overflow:hidden}
@@ -151,7 +151,7 @@ em{font-style:normal}
 /* Contact: bright finish; navigation and details stay high contrast. */
 .contact{background:var(--red);color:#fff;min-height:610px;padding-top:110px;padding-bottom:100px;display:flex;align-items:center}
 .contact .section-kicker{color:rgba(255,255,255,.76)}
-.contact-grid{display:grid;grid-template-columns:1fr .75fr;gap:8vw;align-items:end;width:100%}
+.contact-grid{display:grid;grid-template-columns:1fr .75fr;gap:8vw;align-items:flex-end;width:100%}
 .contact h2{font-size:clamp(58px,8vw,112px)}
 .contact h2 em{color:#09090b}
 .contact-copy{font-size:15px;line-height:1.65;color:rgba(255,255,255,.88);max-width:530px;margin:22px 0 0}

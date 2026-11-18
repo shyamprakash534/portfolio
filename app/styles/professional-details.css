@@ -1,0 +1,48 @@
+/* Detail pass: retain the established palette, layout, imagery and section order. */
+html{scrollbar-gutter:stable;scroll-padding-top:0}
+body{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+[id]{scroll-margin-top:32px}
+.arrow-icon{display:inline-block;flex:none;vertical-align:middle}
+.nav-resume{gap:7px}
+.project-arrow .arrow-icon{width:21px;height:21px}
+.reel-controls{display:flex;align-items:center;gap:8px}
+.hero-tools .mute{width:44px;height:44px}
+button,a{touch-action:manipulation}
+button:focus-visible,a:focus-visible{outline:2px solid #fff;outline-offset:5px}
+.project-filters button,.menu-button,.modal-close{min-width:44px;min-height:44px}
+.project-filters{flex-wrap:wrap;gap:8px}
+.project-count{font-variant-numeric:tabular-nums;white-space:nowrap}
+.project-body{display:flex;flex-direction:column;flex:1;min-width:0}
+.project-body .project-links{margin-top:auto;padding-top:22px}
+.project-body>.chips{margin-bottom:18px}
+.project-body p,.section-intro,.contact-copy{line-height:1.7;text-wrap:pretty}
+.project-top h3,.credential-detail h3{overflow-wrap:anywhere}
+.credential-card{cursor:default}
+.credential-arrow{color:#b8b8c2;font-family:Arial,sans-serif}
+.modal{overscroll-behavior:contain;padding:max(20px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+.modal-card{max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#656570 #17171b}
+.modal-close{z-index:2}
+.project-modal-card>h3{padding-right:42px;text-wrap:balance}
+.case-study-grid p,.evidence{line-height:1.75}
+.project-visual-note,.demo-note{color:#b8b8c2!important}
+.contact-link{min-height:48px}
+@media(hover:none){
+ .project-card:hover,.credential-card:hover,.expertise-card:hover,.skill-box:hover{transform:none}
+ .project-card:hover .visual-ui{transform:none}
+}
+@media(max-width:700px){
+ .hero .hero-tools .mute{width:44px;height:44px}
+ .hero-tools .reel-label{display:none}
+ .project-controls{align-items:flex-start;gap:16px;flex-wrap:wrap}
+ .modal-actions{flex-wrap:wrap;gap:10px}
+ .modal-actions .pill{min-height:46px}
+ .contact h2{font-size:clamp(38px,10vw,64px);letter-spacing:-.05em}
+ .education-card-foot{line-height:1.6}
+}
+@media(max-height:700px) and (min-width:701px){
+ .hero{height:auto;min-height:700px}
+ .hero-content{min-height:700px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
