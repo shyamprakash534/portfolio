@@ -5,14 +5,14 @@ const siteUrl = 'https://syam-prakash-portfolio-live.onrender.com/';
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: 'Syam Prakash Vemula | Software Developer — Python, AI/ML & Backend',
-  description: 'Portfolio of Syam Prakash Vemula, a 2026 MCA graduate building backend systems, source-grounded AI applications, cloud data pipelines and practical software projects.',
+  description: 'Portfolio of Syam Prakash Vemula, a 2026 master's graduate building backend systems, source-grounded AI applications, cloud data pipelines and practical software projects.',
   keywords: ['Syam Prakash Vemula','Software Developer','Python Developer','AI/ML','Backend Developer','FastAPI','AWS','GenAI'],
   authors: [{ name: 'Syam Prakash Vemula' }],
   creator: 'Syam Prakash Vemula',
   alternates: { canonical: siteUrl },
   openGraph: {
     title: 'Syam Prakash Vemula | Software Developer',
-    description: 'MCA graduate (2026) building Python backends, grounded AI applications, cloud and data projects.',
+    description: 'Master's graduate (2026) building Python backends, grounded AI applications, cloud and data projects.',
     url: siteUrl,
     siteName: 'Syam Prakash Vemula',
     type: 'website',
@@ -21,7 +21,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Syam Prakash Vemula | Software Developer',
-    description: 'Python backend, AI/ML, cloud and data projects by a 2026 MCA graduate.'
+    description: 'Python backend, AI/ML, cloud and data projects by a 2026 master's graduate.'
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } }
 };
