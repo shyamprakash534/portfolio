@@ -116,11 +116,11 @@ export default function Home(){
       <video ref={videoRef} className="hero-video" autoPlay muted loop playsInline preload="metadata" onPlay={()=>setVideoPlaying(true)} onPause={()=>setVideoPlaying(false)} onError={()=>setEnableVideo(false)} src={enableVideo?'/hero-video.mp4?v=20261020':undefined} aria-hidden="true"/>
       <div className="hero-video-shade"/>
       <div className="hero-content"><div className="hero-copy">
-        <p className="hero-eyebrow"><span className="hero-status-dot"/> MCA GRADUATE · 2026 <span className="eyebrow-separator">/</span> SOFTWARE DEVELOPER</p>
+        <p className="hero-eyebrow"><span className="hero-status-dot"/> MASTER'S GRADUATE · 2026 <span className="eyebrow-separator">/</span> SOFTWARE DEVELOPER</p>
         <h1>Syam Prakash<span className="hero-title-period">.</span></h1>
         <p className="hero-lead">I build Python backends, source-grounded AI applications and data workflows, with a focus on clear design and maintainable code.</p>
         <div className="actions"><a className="pill primary" href="#projects">Explore projects <Arrow/></a><a className="pill light" href={resumeUrl}>Resume <Arrow/></a><a className="hero-contact" href="#contact">Let’s connect <Arrow/></a></div>
-        <div className="hero-proof" aria-label="Portfolio highlights"><span><b>{projects.length.toString().padStart(2,'0')}</b> Selected builds</span><span><b>03</b> Focus areas</span><span><b>2026</b> MCA graduate</span></div>
+        <div className="hero-proof" aria-label="Portfolio highlights"><span><b>{projects.length.toString().padStart(2,'0')}</b> Selected builds</span><span><b>03</b> Focus areas</span><span><b>2026</b> Master's graduate</span></div>
       </div></div>
       {enableVideo&&<div className="hero-tools"><div className="reel-controls"><button type="button" className="mute" onClick={togglePlayback} aria-label={videoPlaying?'Pause portfolio reel':'Play portfolio reel'} title={videoPlaying?'Pause reel':'Play reel'}><ReelIcon kind={videoPlaying?'pause':'play'}/></button><button type="button" className="mute" onClick={toggleMute} aria-label={muted?'Unmute portfolio reel':'Mute portfolio reel'} title={muted?'Unmute reel':'Mute reel'}><ReelIcon kind={muted?'muted':'sound'}/></button></div><span className="reel-label">PORTFOLIO REEL</span></div>}
       <div className="scroll-cue">SCROLL TO EXPLORE <span>↓</span></div>
@@ -132,7 +132,7 @@ export default function Home(){
       <div className="section-kicker">05 / EDUCATION</div>
       <div className="education-heading"><h2 id="education-title">Built on a strong<br/><em>foundation.</em></h2><p className="section-intro">Formal study in computer applications and statistics, extended through hands-on engineering projects.</p></div>
       <div className="education-grid">
-        <article className="education-card education-card-primary"><div className="education-card-top"><span>POSTGRADUATE</span><span>2026</span></div><h3>Master of Computer Applications</h3><p>Vignan’s Lara Institute of Technology and Science</p><div className="education-card-foot"><span>MCA graduate</span><span>Completed July 2026</span></div></article>
+        <article className="education-card education-card-primary"><div className="education-card-top"><span>POSTGRADUATE</span><span>2026</span></div><h3>Master of Computer Applications</h3><p>Vignan’s Lara Institute of Technology and Science</p><div className="education-card-foot"><span>Master's graduate</span><span>Completed July 2026</span></div></article>
         <article className="education-card"><div className="education-card-top"><span>UNDERGRADUATE</span><span>STATISTICS</span></div><h3>Bachelor of Science</h3><p>Acharya Nagarjuna University</p><div className="education-card-foot"><span>B.Sc. Statistics</span><span>Analytical foundation</span></div></article>
       </div>
     </section>
