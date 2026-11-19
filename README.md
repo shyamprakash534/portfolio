@@ -25,7 +25,7 @@ The static export is generated in `out/`.
 - **Vercel:** connected to the `main` branch; pushes trigger a deployment.
 - **GitHub Pages:** the GitHub Actions workflow builds with the `/portfolio` base path.
 
-The hero video is stored at `public/hero-video.mp4`. The downloadable resume is generated from `app/Syam_Prakash_AI_ML_Resume.pdf/route.js`.
+The hero video is stored at `public/hero-video.mp4`. The downloadable resume is served from `public/Syam_Prakash_Resume.pdf`.
 
 ## Recruiter-first refresh (November 2026)
 
@@ -33,7 +33,7 @@ The hero video is stored at `public/hero-video.mp4`. The downloadable resume is 
 - Three flagship projects are marked as featured; implementation notes appear in keyboard-accessible case study dialogs.
 - Project illustrations are explicitly labeled as illustrative (not measured performance results).
 - Background hero video plays on mobile and desktop when reduced-motion and data-saver preferences permit; the gradient hero remains usable without it.
-- The current AI/ML resume link remains at `/Syam_Prakash_AI_ML_Resume.pdf`. Update the underlying PDF when a new resume is approved.
+- Every visible resume action is labeled `Resume` and links to `/Syam_Prakash_Resume.pdf`. Replace the underlying PDF only when a new resume is approved.
 - Responsive header now exposes direct project, education, contact, and resume links on larger screens.
 
 ### Validation checklist
