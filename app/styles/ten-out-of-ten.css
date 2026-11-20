@@ -8,7 +8,7 @@
 .credential-detail h3{overflow-wrap:anywhere}
 
 /* Recruiter signal rail under the hero copy. */
-.hero-copy:after{content:'MCA GRADUATE  ·  6 PROJECTS  ·  PYTHON  ·  AI/ML  ·  AWS';display:block;margin-top:26px;color:rgba(255,255,255,.64);font:800 9px/1.4 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase}
+.hero-copy:after{content:'MASTER’S DEGREE  ·  6 PROJECTS  ·  PYTHON  ·  AI/ML  ·  AWS';display:block;margin-top:26px;color:rgba(255,255,255,.64);font:800 9px/1.4 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase}
 
 /* Stronger section rhythm without adding noisy animation. */
 .section{position:relative}
