@@ -64,17 +64,19 @@ export default function Home(){
   },[]);
   useEffect(()=>{
     const video=videoRef.current;
-    if(!video||!enableVideo)return;
+    if(!video)return;
+    if(!enableVideo){video.pause();return;}
+    video.defaultMuted = true;
     let inView=true;
     const syncPlayback=()=>{
       if(paused||menu||active||document.hidden||!inView){video.pause();return;}
       video.play().catch(()=>setVideoPlaying(false));
     };
     const observer=new IntersectionObserver(([entry])=>{inView=entry.isIntersecting;syncPlayback();});
-    observer.observe(video);
+    observer.observe(video.closest('.hero'));
     document.addEventListener('visibilitychange',syncPlayback);
     syncPlayback();
-    return()=>{observer.disconnect();document.removeEventListener('visibilitychange',syncPlayback);video.pause();};
+    return()=>{observer.disconnect();document.removeEventListener('visibilitychange',syncPlayback);};
   },[enableVideo,paused,menu,active]);
   useEffect(()=>{const closeOnEscape=event=>{if(event.key==='Escape'){setMenu(false);setActive(null);}};window.addEventListener('keydown',closeOnEscape);return()=>window.removeEventListener('keydown',closeOnEscape);},[]);
   useEffect(()=>{
@@ -103,7 +105,7 @@ export default function Home(){
     const video=videoRef.current;
     if(!video)return;
     if(!enableVideo){
-      video.src=reelUrl;
+      video.muted=muted;
       setEnableVideo(true);
     }
     if(!video.paused){setPaused(true);video.pause();}
@@ -120,7 +122,10 @@ export default function Home(){
   </nav>
     {menu&&<div id="site-menu" className="modal menu-modal" role="dialog" tabIndex={-1} aria-modal="true" aria-label="Site navigation" onClick={()=>setMenu(false)}><div className="modal-card menu-card" onClick={e=>e.stopPropagation()}><div className="menu-card-head"><a href="#top" className="brand" onClick={()=>setMenu(false)}>Syam Prakash<span className="brand-dot">.</span></a><button className="modal-close" onClick={()=>setMenu(false)} aria-label="Close menu">×</button></div><div className="section-kicker">NAVIGATE</div><div className="contact-links"><a className="contact-link" href="#top" onClick={()=>setMenu(false)}>Overview <Arrow/></a><a className="contact-link" href="#expertise" onClick={()=>setMenu(false)}>Expertise <Arrow/></a><a className="contact-link" href="#skills" onClick={()=>setMenu(false)}>Skills <Arrow/></a><a className="contact-link" href="#projects" onClick={()=>setMenu(false)}>Selected work <Arrow/></a><a className="contact-link" href="#education" onClick={()=>setMenu(false)}>Education <Arrow/></a><a className="contact-link" href="#certifications" onClick={()=>setMenu(false)}>Certifications <Arrow/></a><a className="contact-link" href={resumeUrl}>Resume <Arrow/></a><a className="contact-link" href="#contact" onClick={()=>setMenu(false)}>Contact <Arrow/></a></div><a className="pill menu-hire" href="mailto:shyamprakash534@gmail.com" onClick={()=>setMenu(false)}>Let’s connect <Arrow/></a></div></div>}
     <section className="hero" id="top">
-      <video ref={videoRef} className="hero-video" muted={muted} loop playsInline preload="metadata" poster={reelPoster} onPlaying={()=>setVideoPlaying(true)} onPause={()=>setVideoPlaying(false)} onError={()=>setEnableVideo(false)} src={enableVideo?reelUrl:undefined} aria-hidden="true"/>
+      <video ref={videoRef} className="hero-video" autoPlay={enableVideo && !paused && !menu && !active} muted={muted} loop playsInline preload={enableVideo ? 'auto' : 'none'} poster={reelPoster} onPlaying={()=>setVideoPlaying(true)} onPause={()=>setVideoPlaying(false)} aria-hidden="true">
+        <source src={reelBase + '/hero-reel.webm'} type="video/webm"/>
+        <source src={reelUrl} type="video/mp4"/>
+      </video>
       <div className="hero-video-shade"/>
       <div className="hero-content"><div className="hero-copy">
         <p className="hero-eyebrow"><span className="hero-status-dot"/> MASTER’S DEGREE IN COMPUTER APPLICATIONS · 2026 <span className="eyebrow-separator">/</span> SOFTWARE DEVELOPER</p>
