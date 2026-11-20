@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+const reelBase = process.env.NEXT_PUBLIC_BASE_PATH || '';
+const reelUrl = reelBase + '/hero-video.mp4';
+const reelPoster = reelBase + '/hero-poster.jpg';
 const resumeUrl = (process.env.NEXT_PUBLIC_BASE_PATH || '') + '/Syam_Prakash_Resume.pdf';
 
 const projects = [
@@ -99,6 +102,10 @@ export default function Home(){
   const togglePlayback=()=>{
     const video=videoRef.current;
     if(!video)return;
+    if(!enableVideo){
+      video.src=reelUrl;
+      setEnableVideo(true);
+    }
     if(!video.paused){setPaused(true);video.pause();}
     else{setPaused(false);video.play().catch(()=>setVideoPlaying(false));}
   };
@@ -113,7 +120,7 @@ export default function Home(){
   </nav>
     {menu&&<div id="site-menu" className="modal menu-modal" role="dialog" tabIndex={-1} aria-modal="true" aria-label="Site navigation" onClick={()=>setMenu(false)}><div className="modal-card menu-card" onClick={e=>e.stopPropagation()}><div className="menu-card-head"><a href="#top" className="brand" onClick={()=>setMenu(false)}>Syam Prakash<span className="brand-dot">.</span></a><button className="modal-close" onClick={()=>setMenu(false)} aria-label="Close menu">×</button></div><div className="section-kicker">NAVIGATE</div><div className="contact-links"><a className="contact-link" href="#top" onClick={()=>setMenu(false)}>Overview <Arrow/></a><a className="contact-link" href="#expertise" onClick={()=>setMenu(false)}>Expertise <Arrow/></a><a className="contact-link" href="#skills" onClick={()=>setMenu(false)}>Skills <Arrow/></a><a className="contact-link" href="#projects" onClick={()=>setMenu(false)}>Selected work <Arrow/></a><a className="contact-link" href="#education" onClick={()=>setMenu(false)}>Education <Arrow/></a><a className="contact-link" href="#certifications" onClick={()=>setMenu(false)}>Certifications <Arrow/></a><a className="contact-link" href={resumeUrl}>Resume <Arrow/></a><a className="contact-link" href="#contact" onClick={()=>setMenu(false)}>Contact <Arrow/></a></div><a className="pill menu-hire" href="mailto:shyamprakash534@gmail.com" onClick={()=>setMenu(false)}>Let’s connect <Arrow/></a></div></div>}
     <section className="hero" id="top">
-      <video ref={videoRef} className="hero-video" autoPlay muted loop playsInline preload="metadata" onPlay={()=>setVideoPlaying(true)} onPause={()=>setVideoPlaying(false)} onError={()=>setEnableVideo(false)} src={enableVideo?'/hero-video.mp4?v=20261020':undefined} aria-hidden="true"/>
+      <video ref={videoRef} className="hero-video" muted={muted} loop playsInline preload="metadata" poster={reelPoster} onPlaying={()=>setVideoPlaying(true)} onPause={()=>setVideoPlaying(false)} onError={()=>setEnableVideo(false)} src={enableVideo?reelUrl:undefined} aria-hidden="true"/>
       <div className="hero-video-shade"/>
       <div className="hero-content"><div className="hero-copy">
         <p className="hero-eyebrow"><span className="hero-status-dot"/> MASTER’S DEGREE IN COMPUTER APPLICATIONS · 2026 <span className="eyebrow-separator">/</span> SOFTWARE DEVELOPER</p>
@@ -122,7 +129,7 @@ export default function Home(){
         <div className="actions"><a className="pill primary" href="#projects">Explore projects <Arrow/></a><a className="pill light" href={resumeUrl}>Resume <Arrow/></a><a className="hero-contact" href="#contact">Let’s connect <Arrow/></a></div>
         <div className="hero-proof" aria-label="Portfolio highlights"><span><b>{projects.length.toString().padStart(2,'0')}</b> Selected builds</span><span><b>03</b> Focus areas</span><span><b>2026</b> Master’s degree</span></div>
       </div></div>
-      {enableVideo&&<div className="hero-tools"><div className="reel-controls"><button type="button" className="mute" onClick={togglePlayback} aria-label={videoPlaying?'Pause portfolio reel':'Play portfolio reel'} title={videoPlaying?'Pause reel':'Play reel'}><ReelIcon kind={videoPlaying?'pause':'play'}/></button><button type="button" className="mute" onClick={toggleMute} aria-label={muted?'Unmute portfolio reel':'Mute portfolio reel'} title={muted?'Unmute reel':'Mute reel'}><ReelIcon kind={muted?'muted':'sound'}/></button></div><span className="reel-label">PORTFOLIO REEL</span></div>}
+      {<div className="hero-tools"><div className="reel-controls"><button type="button" className="mute" onClick={togglePlayback} aria-label={videoPlaying?'Pause portfolio reel':'Play portfolio reel'} title={videoPlaying?'Pause reel':'Play reel'}><ReelIcon kind={videoPlaying?'pause':'play'}/></button><button type="button" className="mute" onClick={toggleMute} aria-label={muted?'Unmute portfolio reel':'Mute portfolio reel'} title={muted?'Unmute reel':'Mute reel'}><ReelIcon kind={muted?'muted':'sound'}/></button></div><span className="reel-label">PORTFOLIO REEL</span></div>}
       <div className="scroll-cue">SCROLL TO EXPLORE <span>↓</span></div>
     </section>
     <section className="section expertise reveal-on-scroll" id="expertise"><div className="section-kicker">02 / WHAT I DO</div><div className="expertise-head"><div><h2>Building useful<br/><em>digital systems.</em></h2></div><p className="section-intro">From APIs and AI prototypes to data workflows, I focus on systems that solve a real problem and can be explained, tested and improved.</p></div><div className="expertise-grid">{expertise.map(item=><article className="expertise-card" key={item.num}><div className="expertise-card-top"><span>{item.num}</span><span className="expertise-symbol">↘</span></div><small>{item.category}</small><h3>{item.title}</h3><p>{item.text}</p><div className="expertise-stack">{item.stack}</div></article>)}</div></section>

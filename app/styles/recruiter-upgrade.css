@@ -100,7 +100,7 @@
  .hero-proof b{font-size:14px}
  .education-card h3{font-size:29px}
 }
-@media(prefers-reduced-motion:reduce){.hero-video{display:none!important}.hero-contact,.nav-resume{transition:none}}
+@media(prefers-reduced-motion:reduce){.hero-contact,.nav-resume{transition:none}}
 
 /* Keep the reel visible in the mobile hero while preserving text contrast. */
 .hero-video{z-index:0}
@@ -109,4 +109,4 @@
  .hero .hero-video-shade{z-index:2}
  .hero .hero-content,.hero .hero-tools,.hero .scroll-cue{z-index:4}
 }
-@media(prefers-reduced-motion:reduce){.hero .hero-video{display:none!important}.hero .hero-tools{display:none!important}}
+@media(prefers-reduced-motion:reduce){.hero .hero-video,.hero .hero-tools{animation:none!important}}
